@@ -13,13 +13,19 @@ import { config } from "@/utils/config";
 export async function sendEmail() {
 	sendSmtpEmail.subject = "{{params.subject}}";
 	sendSmtpEmail.htmlContent =
-		"<html><body><h1>This is my first transactional test email {{params.parameter}}</h1></body></html>";
-	sendSmtpEmail.sender = { name: "Tax CICCC", email: config.email.from };
-	sendSmtpEmail.to = [{ email: "andasan@gmail.com", name: "Francois Polo" }];
-	sendSmtpEmail.replyTo = { email: config.email.from, name: "Tax CICCC" };
+		"<html><body><h1>{{params.parameter}}</h1></body></html>";
+	sendSmtpEmail.sender = {
+		name: config.email.from.name,
+		email: config.email.from.address,
+	};
+	sendSmtpEmail.to = [{ email: "johndoe@example.com", name: "John Doe" }];
+	sendSmtpEmail.replyTo = {
+		email: config.email.from.address,
+		name: config.email.from.name,
+	};
 	sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
 	sendSmtpEmail.params = {
-		parameter: "My param value",
+		parameter: "This is my first transactional test email",
 		subject: config.email.subject,
 	};
 
@@ -43,28 +49,28 @@ type EmailTemplatesProps = (params: {
 	email: string;
 	firstName: string;
 	lastName: string;
+	folder: string;
 }) => Promise<{ message: string; status: number }>;
 
 export const testSend: EmailTemplatesProps = async ({
 	email,
 	firstName,
 	lastName,
+	folder,
 }) => {
 	return new Promise((resolve, reject) => {
 		try {
-			const identifier = `2023/${firstName.trim()}_${lastName.trim()}`;
+			const identifier = `${folder}/${firstName.trim()}_${lastName.trim()}`;
 
 			cloudinary.v2.api.resource(identifier, (error, result) => {
 				if (error) {
-					console.log("cloud error: ", error);
 					reject({
-						message:
-							"Failed to send email. Student's T2202 form doesn't exists",
+						message: config.error.invalidCloudinaryResource || error.message,
 						status: 404,
 					});
 				} else {
 					resolve({
-						message: `Email sent to ${email} with secure url: ${result.secure_url}`,
+						message: `Email sent to ${email} with attachment url: ${result.secure_url}`,
 						status: 250,
 					});
 
@@ -72,7 +78,10 @@ export const testSend: EmailTemplatesProps = async ({
 						pretty: true,
 					}).then((emailHtml) => {
 						const mailOptions = {
-							from: config.email.from,
+							from: {
+								name: config.email.from.name,
+								address: config.email.from.address,
+							},
 							to: email,
 							subject: config.email.subject,
 							attachments: [
@@ -87,19 +96,15 @@ export const testSend: EmailTemplatesProps = async ({
 						const { to, from, subject, attachments, html } = mailOptions;
 						sendSmtpEmail.subject = subject;
 						sendSmtpEmail.htmlContent = html;
-						sendSmtpEmail.sender = { name: "Tax CICCC", email: from };
+						sendSmtpEmail.sender = { name: from.name, email: from.address };
 						sendSmtpEmail.to = [
 							{ email: to, name: `${firstName} ${lastName}` },
 						];
-						sendSmtpEmail.replyTo = {
-							email: "tax@ciccc.ca",
-							name: "Tax CICCC",
-						};
+						sendSmtpEmail.replyTo = { name: from.name, email: from.address };
 						sendSmtpEmail.attachment = attachments;
 						apiInstance.sendTransacEmail(sendSmtpEmail).then(
 							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 							async (data: any) => {
-								// console.info('API called successfully. Returned data: ' + JSON.stringify(data));
 								resolve({ message: `Email sent to ${email}`, status: 250 });
 							},
 							// biome-ignore lint/suspicious/noExplicitAny: <explanation>

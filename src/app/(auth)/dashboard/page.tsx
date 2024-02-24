@@ -75,6 +75,7 @@ export default function PlaygroundPage() {
 							email: "andasan@gmail.com",
 							firstName: "Francois",
 							lastName: "Polo",
+							folder: "2023",
 						});
 						console.log("success: ", message);
 					} catch (e) {
