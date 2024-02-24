@@ -1,5 +1,5 @@
-import Search from "@/components/search/search";
-import UsersTable from "@/components/table/table";
+import Search from "@/app/(auth)/recipients/_components/search";
+import UsersTable from "@/app/(auth)/recipients/_components/table";
 import { Card, Text, Title } from "@tremor/react";
 import { sql } from "@vercel/postgres";
 

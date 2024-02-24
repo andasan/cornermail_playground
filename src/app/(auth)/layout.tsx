@@ -2,8 +2,8 @@ import { Suspense } from "react";
 
 import "@/app/globals.css";
 
+import Nav from "@/app/(auth)/_components/navigation/nav";
 import Toast from "@/components/cookiesBanner/toast";
-import Nav from "@/components/navigation/nav";
 import { Analytics } from "@vercel/analytics/react";
 import Loading from "./loading";
 

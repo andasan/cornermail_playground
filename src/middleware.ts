@@ -1,4 +1,4 @@
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(req: NextRequest, res: NextResponse) {
@@ -8,14 +8,10 @@ export default async function middleware(req: NextRequest, res: NextResponse) {
 	const protectedRoutes = ["/dashboard", "/recipients"];
 
 	if (protectedRoutes.includes(path) && !session) {
-		return NextResponse.redirect(new URL("/main", req.url));
+		return NextResponse.redirect(new URL("/", req.url));
 	}
 
-	if (!session && path === "/") {
-		return NextResponse.redirect(new URL("/main", req.url));
-	}
-
-	if (session && (path === "/" || path === "/main")) {
+	if (session && (path === "/" || path === "/")) {
 		console.log("path", path);
 		return NextResponse.redirect(new URL("/dashboard", req.url));
 	}

@@ -1,7 +1,3 @@
-import { Text, Title } from "@tremor/react";
-
-import Search from "@/components/search/search";
-
 export default function Loading() {
 	return (
 		<main className="p-4 md:p-10 mx-auto max-w-7xl">

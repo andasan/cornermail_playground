@@ -74,10 +74,14 @@ type EmailTemplates = (params: {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }) => Promise<any>;
 
-const testSend: EmailTemplates = async ({ email, firstName, lastName }) => {
+export const testSend: EmailTemplates = async ({
+	email,
+	firstName,
+	lastName,
+}) => {
 	return new Promise((resolve, reject) => {
 		try {
-			const identifier = `${firstName.trim()}_${lastName.trim()}`;
+			const identifier = `2023/${firstName.trim()}_${lastName.trim()}`;
 
 			cloudinary.v2.api.resource(identifier, (error, result) => {
 				if (error) {
@@ -88,6 +92,10 @@ const testSend: EmailTemplates = async ({ email, firstName, lastName }) => {
 						status: 404,
 					});
 				} else {
+					resolve({
+						message: `Email sent to ${email} with secure url: ${result.secure_url}`,
+						status: 250,
+					});
 					// const emailHtml = render(<EmailTemplate studentName={firstName} />, { pretty: true });
 					// const mailOptions = {
 					//   from: config.email.from || 'tax@ciccc.ca',
