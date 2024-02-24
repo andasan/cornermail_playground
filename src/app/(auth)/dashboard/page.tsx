@@ -9,7 +9,7 @@ import {
 	TabPanels,
 } from "@tremor/react";
 
-import { getAccount, sendEmail, testSend } from "@/actions/brevo";
+import { sendEmail, testSend } from "@/actions/brevo";
 import Chart from "./_components/chart";
 import Statistics from "./_components/statistics";
 
@@ -60,16 +60,6 @@ export default function PlaygroundPage() {
 			<button
 				type="button"
 				onClick={async () => {
-					const account = await getAccount();
-					console.log(account);
-				}}
-				className="mr-2 px-4 py-2 text-white bg-tremor-brand dark:bg-dark-tremor-brand"
-			>
-				GET ACCOUNT
-			</button>
-			<button
-				type="button"
-				onClick={async () => {
 					const message = await sendEmail();
 					console.log(message);
 				}}
@@ -93,7 +83,7 @@ export default function PlaygroundPage() {
 				}}
 				className="mr-2 px-4 py-2 text-white bg-tremor-brand dark:bg-dark-tremor-brand"
 			>
-				GET PDF
+				SEND TEST EMAIL WITH PDF
 			</button>
 			<Statistics />
 

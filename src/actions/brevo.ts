@@ -1,44 +1,16 @@
 "use server";
 
-import {
-	AccountApi,
-	AccountApiApiKeys,
-	SendSmtpEmail,
-	TransactionalEmailsApi,
-	TransactionalEmailsApiApiKeys,
-} from "@getbrevo/brevo";
-
-import { config } from "@/utils/config";
+import { renderAsync } from "@react-email/render";
 import cloudinary from "cloudinary";
 
-/**
- * Brevo Account API instance
- */
-export async function getAccount() {
-	const accountApiInstance = new AccountApi();
-
-	accountApiInstance.setApiKey(AccountApiApiKeys.apiKey, config.brevoApiKey);
-
-	const data = await accountApiInstance.getAccount();
-	console.log(data);
-
-	return {
-		message: "API called successfully",
-	};
-}
+import { EmailTemplate } from "@/components/emailTemplate";
+import { apiInstance, sendSmtpEmail } from "@/lib/brevo";
+import { config } from "@/utils/config";
 
 /**
  * Brevo Transactional API instance
  */
 export async function sendEmail() {
-	const apiInstance = new TransactionalEmailsApi();
-	const sendSmtpEmail = new SendSmtpEmail();
-
-	apiInstance.setApiKey(
-		TransactionalEmailsApiApiKeys.apiKey,
-		config.brevoApiKey,
-	);
-
 	sendSmtpEmail.subject = "{{params.subject}}";
 	sendSmtpEmail.htmlContent =
 		"<html><body><h1>This is my first transactional test email {{params.parameter}}</h1></body></html>";
@@ -67,14 +39,13 @@ export async function sendEmail() {
 	}
 }
 
-type EmailTemplates = (params: {
+type EmailTemplatesProps = (params: {
 	email: string;
 	firstName: string;
 	lastName: string;
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}) => Promise<any>;
+}) => Promise<{ message: string; status: number }>;
 
-export const testSend: EmailTemplates = async ({
+export const testSend: EmailTemplatesProps = async ({
 	email,
 	firstName,
 	lastName,
@@ -96,36 +67,51 @@ export const testSend: EmailTemplates = async ({
 						message: `Email sent to ${email} with secure url: ${result.secure_url}`,
 						status: 250,
 					});
-					// const emailHtml = render(<EmailTemplate studentName={firstName} />, { pretty: true });
-					// const mailOptions = {
-					//   from: config.email.from || 'tax@ciccc.ca',
-					//   to: email,
-					//   subject: config.email.subject || 'T2202 Form',
-					//   attachments: [
-					//     {
-					//       name: 't2202-fill-21e.pdf',
-					//       url: result.secure_url,
-					//     },
-					//   ],
-					//   html: emailHtml,
-					// };
-					// const { to, from, subject, attachments, html } = mailOptions;
-					// sendSmtpEmail.subject = subject;
-					// sendSmtpEmail.htmlContent = html;
-					// sendSmtpEmail.sender = { "name": "Tax CICCC", "email": from };
-					// sendSmtpEmail.to = [{ "email": to, "name": `${firstName} ${lastName}` }];
-					// sendSmtpEmail.replyTo = { "email": "tax@ciccc.ca", "name": "Tax CICCC" };
-					// sendSmtpEmail.attachment = attachments;
-					// apiInstance.sendTransacEmail(sendSmtpEmail).then(async (data: any) => {
-					//   // console.info('API called successfully. Returned data: ' + JSON.stringify(data));
-					//   resolve({ message: `Email sent to ${email}`, status: 250 });
-					// }, function (error: any) {
-					//   console.error(error);
-					//   reject({
-					//     message: error.message || error.response,
-					//     status: error.responseCode || 500,
-					//   });
-					// });
+
+					renderAsync(EmailTemplate({ studentName: firstName }), {
+						pretty: true,
+					}).then((emailHtml) => {
+						const mailOptions = {
+							from: config.email.from,
+							to: email,
+							subject: config.email.subject,
+							attachments: [
+								{
+									name: "t2202-fill-21e.pdf",
+									url: result.secure_url,
+								},
+							],
+							html: emailHtml,
+						};
+
+						const { to, from, subject, attachments, html } = mailOptions;
+						sendSmtpEmail.subject = subject;
+						sendSmtpEmail.htmlContent = html;
+						sendSmtpEmail.sender = { name: "Tax CICCC", email: from };
+						sendSmtpEmail.to = [
+							{ email: to, name: `${firstName} ${lastName}` },
+						];
+						sendSmtpEmail.replyTo = {
+							email: "tax@ciccc.ca",
+							name: "Tax CICCC",
+						};
+						sendSmtpEmail.attachment = attachments;
+						apiInstance.sendTransacEmail(sendSmtpEmail).then(
+							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+							async (data: any) => {
+								// console.info('API called successfully. Returned data: ' + JSON.stringify(data));
+								resolve({ message: `Email sent to ${email}`, status: 250 });
+							},
+							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+							(error: any) => {
+								console.error(error);
+								reject({
+									message: error.message || error.response,
+									status: error.responseCode || 500,
+								});
+							},
+						);
+					});
 				}
 			});
 
