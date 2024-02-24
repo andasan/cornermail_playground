@@ -30,8 +30,7 @@ export async function sendEmail() {
 	};
 
 	try {
-		const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
-		console.log(data);
+		await apiInstance.sendTransacEmail(sendSmtpEmail);
 
 		return {
 			message: "API called successfully",
