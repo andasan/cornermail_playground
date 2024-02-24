@@ -1,4 +1,3 @@
-import Header from "@/components/home/header";
 import {
 	Blog,
 	CallToAction,
@@ -6,7 +5,8 @@ import {
 	HeroSection,
 	Stats,
 	Testimonials,
-} from "@/pages/main";
+} from "@/app/(landing)/_components";
+import Header from "@/app/(landing)/_components/layout/header";
 
 export default async function IndexPage() {
 	return (

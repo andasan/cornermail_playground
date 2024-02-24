@@ -1,4 +1,4 @@
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth";
 import Navbar from "./navbar";
 
 export default async function Nav() {

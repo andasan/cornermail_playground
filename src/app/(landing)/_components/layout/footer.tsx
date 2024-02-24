@@ -1,4 +1,4 @@
-import Container from "@/components/layouts/container";
+import Container from "@/app/(landing)/_components/sectionwrapper/container";
 
 export default function Footer() {
 	return (

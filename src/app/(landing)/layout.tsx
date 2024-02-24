@@ -1,8 +1,8 @@
 import "@/app/globals.css";
 
-import Footer from "@/components/home/footer";
-import Header from "@/components/home/header";
-import Nav from "@/components/navigation/nav";
+import Nav from "@/app/(auth)/_components/navigation/nav";
+import Footer from "@/app/(landing)/_components/layout/footer";
+import Header from "@/app/(landing)/_components/layout/header";
 import { Analytics } from "@vercel/analytics/react";
 import { Suspense } from "react";
 import Toast from "../../components/cookiesBanner/toast";

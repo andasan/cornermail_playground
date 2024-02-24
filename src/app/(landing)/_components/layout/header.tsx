@@ -1,4 +1,4 @@
-import Container from "@/components/layouts/container";
+import Container from "@/app/(landing)/_components/sectionwrapper/container";
 import Brand from "@/components/logo";
 import AuthButton from "./auth-button";
 
@@ -16,7 +16,7 @@ export default function Header() {
 						/>
 						<div className="relative z-20 w-full flex justify-between lg:w-max md:px-0">
 							<a
-								href="#home"
+								href="/"
 								aria-label="logo"
 								className="flex space-x-2 items-center"
 							>
