@@ -66,7 +66,7 @@ export default async function RecipientsPage() {
 	const tasks = await getTasks();
 
 	return (
-		<>
+		<main className="p-4 md:p-10 mx-auto max-w-7xl">
 			<div className="md:hidden">
 				<Image
 					src="/examples/tasks-light.png"
@@ -83,7 +83,7 @@ export default async function RecipientsPage() {
 					className="hidden dark:block"
 				/>
 			</div>
-			<div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+			<div className="hidden h-full flex-1 flex-col space-y-8 py-8 md:flex">
 				<div className="flex items-center justify-between space-y-2">
 					<div>
 						<h2 className="text-2xl font-bold tracking-tight">Welcome back!</h2>
@@ -97,6 +97,6 @@ export default async function RecipientsPage() {
 				</div>
 				<DataTable data={tasks} columns={columns} />
 			</div>
-		</>
+		</main>
 	);
 }
