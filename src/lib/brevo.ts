@@ -2,9 +2,9 @@ import {
 	SendSmtpEmail,
 	TransactionalEmailsApi,
 	TransactionalEmailsApiApiKeys,
-} from "@getbrevo/brevo";
+} from '@getbrevo/brevo';
 
-import { config } from "@/utils/config";
+import { config } from '@/utils/config';
 
 const apiInstance = new TransactionalEmailsApi();
 const sendSmtpEmail = new SendSmtpEmail();

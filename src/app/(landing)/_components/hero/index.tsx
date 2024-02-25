@@ -1,4 +1,4 @@
-import Container from "@/app/(landing)/_components/sectionwrapper/container";
+import Container from '@/app/(landing)/_components/sectionwrapper/container';
 
 export default function Hero() {
 	return (
@@ -14,7 +14,7 @@ export default function Hero() {
 				<div className="relative pt-36 ml-auto">
 					<div className="lg:w-2/3 text-center mx-auto">
 						<h1 className="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">
-							Unleash the Power of Bulk Emailing,{" "}
+							Unleash the Power of Bulk Emailing,{' '}
 							<span className="text-primary dark:text-white">
 								Effortlessly.
 							</span>

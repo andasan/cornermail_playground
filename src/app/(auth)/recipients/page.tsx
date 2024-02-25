@@ -1,7 +1,7 @@
-import Search from "@/app/(auth)/recipients/_components/search";
-import UsersTable from "@/app/(auth)/recipients/_components/table";
-import { Card, Text, Title } from "@tremor/react";
-import { sql } from "@vercel/postgres";
+import Search from '@/app/(auth)/recipients/_components/search';
+import UsersTable from '@/app/(auth)/recipients/_components/table';
+import { Card, Text, Title } from '@tremor/react';
+import { sql } from '@vercel/postgres';
 
 interface User {
 	id: number;
@@ -10,12 +10,12 @@ interface User {
 	email: string;
 }
 
-export default async function IndexPage({
+export default async function RecipientsPage({
 	searchParams,
 }: {
 	searchParams: { q: string };
 }) {
-	const search = searchParams.q ?? "";
+	const search = searchParams.q ?? '';
 	const result = await sql`
     SELECT id, name, username, email
     FROM users

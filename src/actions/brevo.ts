@@ -1,31 +1,31 @@
-"use server";
+'use server';
 
-import { renderAsync } from "@react-email/render";
-import cloudinary from "cloudinary";
+import { renderAsync } from '@react-email/render';
+import cloudinary from 'cloudinary';
 
-import { EmailTemplate } from "@/components/emailTemplate";
-import { apiInstance, sendSmtpEmail } from "@/lib/brevo";
-import { config } from "@/utils/config";
+import { EmailTemplate } from '@/components/emailTemplate';
+import { apiInstance, sendSmtpEmail } from '@/lib/brevo';
+import { config } from '@/utils/config';
 
 /**
  * Brevo Transactional API instance
  */
 export async function sendEmail() {
-	sendSmtpEmail.subject = "{{params.subject}}";
+	sendSmtpEmail.subject = '{{params.subject}}';
 	sendSmtpEmail.htmlContent =
-		"<html><body><h1>{{params.parameter}}</h1></body></html>";
+		'<html><body><h1>{{params.parameter}}</h1></body></html>';
 	sendSmtpEmail.sender = {
 		name: config.email.from.name,
 		email: config.email.from.address,
 	};
-	sendSmtpEmail.to = [{ email: "johndoe@example.com", name: "John Doe" }];
+	sendSmtpEmail.to = [{ email: 'johndoe@example.com', name: 'John Doe' }];
 	sendSmtpEmail.replyTo = {
 		email: config.email.from.address,
 		name: config.email.from.name,
 	};
-	sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
+	sendSmtpEmail.headers = { 'Some-Custom-Name': 'unique-id-1234' };
 	sendSmtpEmail.params = {
-		parameter: "This is my first transactional test email",
+		parameter: 'This is my first transactional test email',
 		subject: config.email.subject,
 	};
 
@@ -33,13 +33,13 @@ export async function sendEmail() {
 		await apiInstance.sendTransacEmail(sendSmtpEmail);
 
 		return {
-			message: "API called successfully",
+			message: 'API called successfully',
 		};
 	} catch (error) {
 		console.error(error);
 
 		return {
-			message: "API call failed",
+			message: 'API call failed',
 		};
 	}
 }
@@ -85,7 +85,7 @@ export const testSend: EmailTemplatesProps = async ({
 							subject: config.email.subject,
 							attachments: [
 								{
-									name: "t2202-fill-21e.pdf",
+									name: 't2202-fill-21e.pdf',
 									url: result.secure_url,
 								},
 							],

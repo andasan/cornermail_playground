@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function DismissButton() {
 	const router = useRouter();
@@ -11,7 +11,7 @@ export default function DismissButton() {
 			type="button"
 			className="contents underline text-blue-600"
 			onClick={() => {
-				Cookies.set("template-banner-hidden", "true");
+				Cookies.set('template-banner-hidden', 'true');
 				router.refresh();
 			}}
 		>

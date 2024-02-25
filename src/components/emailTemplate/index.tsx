@@ -9,10 +9,10 @@ import {
 	Preview,
 	Section,
 	Text,
-} from "@react-email/components";
-import * as React from "react";
+} from '@react-email/components';
+import * as React from 'react';
 
-import { config } from "@/utils/config";
+import { config } from '@/utils/config';
 
 export function EmailTemplate({ studentName }: { studentName: string }) {
 	const baseUrl = config.assetsUrl;
@@ -60,7 +60,7 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 						</Text>
 						<Text style={paragraph}>
 							If you need assistance to file your certificate, please contact
-							our preferred partner, Phoenix Accounting Services:{" "}
+							our preferred partner, Phoenix Accounting Services:{' '}
 							<a href="https://phoenixcanada.ca/file-your-taxes/">
 								https://phoenixcanada.ca/file-your-taxes/
 							</a>
@@ -74,7 +74,7 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 					<Section style={containerContact}>
 						<Section
 							style={{
-								padding: "20px 20px",
+								padding: '20px 20px',
 							}}
 						>
 							<Text style={paragraph}>Connect with us</Text>
@@ -144,8 +144,8 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 						<Text
 							style={{
 								...paragraph,
-								fontSize: "12px",
-								textAlign: "center",
+								fontSize: '12px',
+								textAlign: 'center',
 								margin: 0,
 							}}
 						>
@@ -165,11 +165,11 @@ const fontFamily =
 	'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif';
 
 const main = {
-	backgroundColor: "#dbddde",
+	backgroundColor: '#dbddde',
 };
 
 const sectionLogo = {
-	padding: "0 40px",
+	padding: '0 40px',
 };
 
 const headerBlue = {
@@ -178,32 +178,32 @@ const headerBlue = {
 };
 
 const container = {
-	margin: "30px auto",
-	width: "610px",
-	backgroundColor: "#fff",
+	margin: '30px auto',
+	width: '610px',
+	backgroundColor: '#fff',
 	borderRadius: 5,
-	overflow: "hidden",
-	maxWidth: "100%",
+	overflow: 'hidden',
+	maxWidth: '100%',
 };
 
 const containerContact = {
-	backgroundColor: "#f0fcff",
-	width: "90%",
-	borderRadius: "5px",
-	overflow: "hidden",
+	backgroundColor: '#f0fcff',
+	width: '90%',
+	borderRadius: '5px',
+	overflow: 'hidden',
 	marginBottom: 20,
 };
 
 const heading = {
 	fontFamily,
-	fontSize: "14px",
-	lineHeight: "26px",
+	fontSize: '14px',
+	lineHeight: '26px',
 	fontWeight: 700,
-	color: "#004dcf",
+	color: '#004dcf',
 };
 
 const paragraphContent = {
-	padding: "0 40px",
+	padding: '0 40px',
 };
 
 const paragraphList = {
@@ -212,17 +212,17 @@ const paragraphList = {
 
 const paragraph = {
 	fontFamily,
-	fontSize: "14px",
-	lineHeight: "22px",
-	color: "#3c4043",
+	fontSize: '14px',
+	lineHeight: '22px',
+	color: '#3c4043',
 };
 
 const link = {
 	...paragraph,
-	color: "#004dcf",
+	color: '#004dcf',
 };
 
 const hr = {
-	borderColor: "#e8eaed",
-	margin: "20px 0",
+	borderColor: '#e8eaed',
+	margin: '20px 0',
 };

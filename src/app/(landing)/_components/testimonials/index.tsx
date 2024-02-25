@@ -1,4 +1,4 @@
-import Container from "@/app/(landing)/_components/sectionwrapper/container";
+import Container from '@/app/(landing)/_components/sectionwrapper/container';
 
 export default function Testimonials() {
 	return (
@@ -59,7 +59,7 @@ export default function Testimonials() {
 							</div>
 						</div>
 						<p className="mt-8">
-							{" "}
+							{' '}
 							Lorem ipsum dolor laboriosam deleniti aperiam ab veniam sint non
 							cumque quis tempore cupiditate. Sint libero voluptas veniam at
 							reprehenderit, veritatis harum et rerum.
@@ -137,7 +137,7 @@ export default function Testimonials() {
 							</div>
 						</div>
 						<p className="mt-8">
-							{" "}
+							{' '}
 							Lorem ipsum dolor sit amet consectetur, adipisicing elit.
 							Architecto laboriosam deleniti aperiam ab veniam sint non cumque
 							quis tempore cupiditate. Sint libero voluptas veniam at

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { usePathname, useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 export default function Search({ disabled }: { disabled?: boolean }) {
 	const { replace } = useRouter();
@@ -12,9 +12,9 @@ export default function Search({ disabled }: { disabled?: boolean }) {
 	function handleSearch(term: string) {
 		const params = new URLSearchParams(window.location.search);
 		if (term) {
-			params.set("q", term);
+			params.set('q', term);
 		} else {
-			params.delete("q");
+			params.delete('q');
 		}
 
 		startTransition(() => {
