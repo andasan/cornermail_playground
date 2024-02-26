@@ -12,8 +12,9 @@ export async function POST(request: Request) {
 	const updatedAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
 	try {
-		if (!firstName || !lastName)
-			throw new Error('First and Last names required');
+		if (!firstName || !lastName || !email || !batch || !organizationId)
+			throw new Error('Recipient details required');
+
 		await sql`INSERT INTO Recipients (
       FirstName,
       LastName,
