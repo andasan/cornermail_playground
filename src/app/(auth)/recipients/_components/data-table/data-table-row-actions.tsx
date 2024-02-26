@@ -4,22 +4,19 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
 	DropdownMenuSeparator,
 	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { labels } from '@/app/(auth)/recipients/_data/data';
-import { taskSchema } from '@/app/(auth)/recipients/_data/schema';
+import { EditRecipient } from '@/app/(auth)/_components/dialog/edit-recipient';
+import { recipientSchema } from '@/app/(auth)/recipients/_data/schema';
+import { useState } from 'react';
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>;
@@ -28,42 +25,34 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
 	row,
 }: DataTableRowActionsProps<TData>) {
-	const task = taskSchema.parse(row.original);
+	const [open, setOpen] = useState(false);
+	const recipient = recipientSchema.parse(row.original);
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button
-					variant="ghost"
-					className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-				>
-					<DotsHorizontalIcon className="h-4 w-4" />
-					<span className="sr-only">Open menu</span>
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-[160px]">
-				<DropdownMenuItem>Edit</DropdownMenuItem>
-				<DropdownMenuItem>Make a copy</DropdownMenuItem>
-				<DropdownMenuItem>Favorite</DropdownMenuItem>
-				<DropdownMenuSeparator />
-				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-					<DropdownMenuSubContent>
-						<DropdownMenuRadioGroup value={task.label}>
-							{labels.map((label) => (
-								<DropdownMenuRadioItem key={label.value} value={label.value}>
-									{label.label}
-								</DropdownMenuRadioItem>
-							))}
-						</DropdownMenuRadioGroup>
-					</DropdownMenuSubContent>
-				</DropdownMenuSub>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem>
-					Delete
-					<DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button
+						variant="ghost"
+						className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+					>
+						<DotsHorizontalIcon className="h-4 w-4" />
+						<span className="sr-only">Open menu</span>
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end" className="w-[160px]">
+					<DialogTrigger asChild>
+						<DropdownMenuItem>Edit</DropdownMenuItem>
+					</DialogTrigger>
+					<DropdownMenuItem>Send Email</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem>
+						Delete
+						<DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+			<EditRecipient recipient={recipient} setOpen={setOpen} />
+		</Dialog>
 	);
 }
