@@ -1,4 +1,4 @@
-import { sendEmail, testSend } from '@/actions/brevo';
+import { sendEmail, testSend } from '@/actions/sendEmail';
 
 export default function MailTest() {
 	return (

@@ -15,11 +15,6 @@ import {
 export function ModeToggle() {
 	const { setTheme } = useTheme();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	React.useEffect(() => {
-		setTheme('system');
-	}, []);
-
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

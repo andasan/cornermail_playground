@@ -1,12 +1,11 @@
-import { Suspense } from 'react';
-
 import '@/app/globals.css';
 
 import Nav from '@/app/(auth)/_components/navigation/nav';
 import Toast from '@/components/cookiesBanner/toast';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
-import Loading from './loading';
+import { Suspense } from 'react';
+import Loading from './dashboard/loading';
 
 export const metadata = {
 	title: 'CornerMail',
@@ -28,12 +27,10 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<Suspense fallback={<Loading />}>
-						<Nav />
-						{children}
-						{/* <Analytics />
+					<Nav />
+					<Suspense fallback={<Loading />}>{children}</Suspense>
+					{/* <Analytics />
 					<Toast /> */}
-					</Suspense>
 				</ThemeProvider>
 			</body>
 		</html>

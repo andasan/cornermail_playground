@@ -1,12 +1,12 @@
+import { Suspense } from 'react';
+
 import '@/app/globals.css';
 
 import Nav from '@/app/(auth)/_components/navigation/nav';
-import Footer from '@/app/(landing)/_components/layout/footer';
-import Header from '@/app/(landing)/_components/layout/header';
+import Toast from '@/components/cookiesBanner/toast';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
-import { Suspense } from 'react';
-import Toast from '../../components/cookiesBanner/toast';
+import Loading from './loading';
 
 export const metadata = {
 	title: 'CornerMail',
@@ -20,22 +20,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
-			<body className="bg-white dark:bg-gray-900">
-				<ThemeProvider
+		<html lang="en">
+			<body>
+				{/* <ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
-				>
-					<Suspense>
-						{/* <Header /> */}
-						{children}
-						<Footer />
-						<Analytics />
-					</Suspense>
-					{/* <Toast /> */}
-				</ThemeProvider>
+				> */}
+				<Nav />
+				<Suspense fallback={<Loading />}>{children}</Suspense>
+				{/* <Analytics />
+					<Toast /> */}
+				{/* </ThemeProvider> */}
 			</body>
 		</html>
 	);
