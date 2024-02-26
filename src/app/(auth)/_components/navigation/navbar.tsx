@@ -60,7 +60,6 @@ export default function Navbar({ user }: { user: any }) {
 										<span className="sr-only">Open user menu</span>
 										<UserNav
 											src={user?.image || 'https://avatar.vercel.sh/leerob'}
-											alt={`${user?.name || 'placeholder'} avatar`}
 											userName={`${user?.name || 'placeholder'}`}
 											email={`${user?.email || 'placeholder'}`}
 										/>

@@ -14,12 +14,10 @@ import {
 
 export function UserNav({
 	src,
-	alt,
 	userName,
 	email,
 }: {
 	src: string;
-	alt: string;
 	userName: string;
 	email: string;
 }) {
