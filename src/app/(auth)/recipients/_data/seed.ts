@@ -6,7 +6,7 @@ import { statuses } from './data';
 
 const recipients = Array.from({ length: 100 }, () => ({
 	id: `RECIPIENT-${faker.number.int({ min: 1000, max: 9999 })}`,
-	studentId: `STUDENT-${faker.number.int({ min: 1000, max: 9999 })}`,
+	organizationId: `STUDENT-${faker.number.int({ min: 1000, max: 9999 })}`,
 	createdAt: faker.date.past(),
 	updatedAt: faker.date.recent(),
 	status: faker.helpers.arrayElement(statuses).value,
