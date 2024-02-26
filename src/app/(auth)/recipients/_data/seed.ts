@@ -2,19 +2,23 @@ import fs from 'fs';
 import path from 'path';
 import { faker } from '@faker-js/faker';
 
-import { labels, priorities, statuses } from './data';
+import { statuses } from './data';
 
-const tasks = Array.from({ length: 100 }, () => ({
-	id: `TASK-${faker.number.int({ min: 1000, max: 9999 })}`,
-	title: faker.hacker.phrase().replace(/^./, (letter) => letter.toUpperCase()),
+const recipients = Array.from({ length: 100 }, () => ({
+	id: `RECIPIENT-${faker.number.int({ min: 1000, max: 9999 })}`,
+	studentId: `STUDENT-${faker.number.int({ min: 1000, max: 9999 })}`,
+	createdAt: faker.date.past(),
+	updatedAt: faker.date.recent(),
 	status: faker.helpers.arrayElement(statuses).value,
-	label: faker.helpers.arrayElement(labels).value,
-	priority: faker.helpers.arrayElement(priorities).value,
+	batch: faker.number.int({ min: 2023, max: 2024 }),
+	firstName: faker.person.firstName(),
+	lastName: faker.person.lastName(),
+	email: faker.internet.email(),
 }));
 
 fs.writeFileSync(
-	path.join(__dirname, 'tasks.json'),
-	JSON.stringify(tasks, null, 2),
+	path.join(__dirname, 'recipients.json'),
+	JSON.stringify(recipients, null, 2),
 );
 
 console.log('✅ Tasks data generated.');

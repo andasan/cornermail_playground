@@ -10,7 +10,8 @@
 		"test:watch": "vitest --watch",
 		"prepare": "husky",
 		"pre-commit": "lint-staged",
-		"format": "biome check --apply ./src"
+		"format": "biome check --apply ./src",
+		"seed": "tsx ./src/app/\\(auth\\)/recipients/_data/seed.ts"
 	},
 	"dependencies": {
 		"@getbrevo/brevo": "2.0.0-beta.4",
@@ -70,12 +71,14 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.5.3",
+		"@faker-js/faker": "^8.4.1",
 		"@tailwindcss/forms": "^0.5.7",
 		"@testing-library/react": "^14.2.1",
 		"@vitejs/plugin-react": "^4.2.1",
 		"husky": "^9.0.11",
 		"jsdom": "^24.0.0",
 		"lint-staged": "^15.2.2",
+		"tsx": "^4.7.1",
 		"vite-tsconfig-paths": "^4.3.1",
 		"vitest": "^1.3.1"
 	},

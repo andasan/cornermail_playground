@@ -9,6 +9,7 @@ import { Fragment } from 'react';
 
 import Brand from '@/components/logo';
 import { ModeToggle } from '@/components/theme/color-scheme';
+import { UserNav } from './user-nav';
 
 const navigation = [
 	{ name: 'Dashboard', href: '/dashboard' },
@@ -53,10 +54,11 @@ export default function Navbar({ user }: { user: any }) {
 							</div>
 							<div className="flex items-center">
 								<ModeToggle />
-								<div className="hidden sm:ml-6 sm:flex sm:items-center">
+								<div className="hidden sm:ml-2 sm:flex sm:items-center">
 									<Menu as="div" className="relative ml-3">
 										<div>
-											<Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+											<UserNav />
+											{/* <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
 												<span className="sr-only">Open user menu</span>
 												<Image
 													className="h-8 w-8 rounded-full"
@@ -65,7 +67,7 @@ export default function Navbar({ user }: { user: any }) {
 													width={32}
 													alt={`${user?.name || 'placeholder'} avatar`}
 												/>
-											</Menu.Button>
+											</Menu.Button> */}
 										</div>
 										<Transition
 											as={Fragment}
