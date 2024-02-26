@@ -2,15 +2,12 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import { Badge } from '@/components/ui/badge';
+import { Badge, badgeVariants } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import {
-	labels,
-	priorities,
-	statuses,
-} from '@/app/(auth)/recipients/_data/data';
+import { statuses } from '@/app/(auth)/recipients/_data/data';
 import { Task } from '@/app/(auth)/recipients/_data/schema';
+import { cn } from '@/lib/utils';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
@@ -40,31 +37,47 @@ export const columns: ColumnDef<Task>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'id',
+		accessorKey: 'studentId',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Task" />
+			<DataTableColumnHeader column={column} title="Student ID" />
 		),
-		cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
+		cell: ({ row }) => (
+			<div className="w-[80px]">{row.getValue('studentId')}</div>
+		),
 		enableSorting: false,
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'title',
+		accessorKey: 'firstName',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Title" />
+			<DataTableColumnHeader column={column} title="First Name" />
 		),
-		cell: ({ row }) => {
-			const label = labels.find((label) => label.value === row.original.label);
-
-			return (
-				<div className="flex space-x-2">
-					{label && <Badge variant="outline">{label.label}</Badge>}
-					<span className="max-w-[500px] truncate font-medium">
-						{row.getValue('title')}
-					</span>
-				</div>
-			);
-		},
+		cell: ({ row }) => (
+			<div className="w-[200px]">{row.getValue('firstName')}</div>
+		),
+	},
+	{
+		accessorKey: 'lastName',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Last Name" />
+		),
+		cell: ({ row }) => (
+			<div className="w-[200px]">{row.getValue('lastName')}</div>
+		),
+	},
+	{
+		accessorKey: 'email',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Email" />
+		),
+		cell: ({ row }) => <div className="w-[200px]">{row.getValue('email')}</div>,
+	},
+	{
+		accessorKey: 'batch',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Batch" />
+		),
+		cell: ({ row }) => <div className="w-[100px]">{row.getValue('batch')}</div>,
 	},
 	{
 		accessorKey: 'status',
@@ -76,43 +89,28 @@ export const columns: ColumnDef<Task>[] = [
 				(status) => status.value === row.getValue('status'),
 			);
 
+			const variant =
+				status?.label === 'Bounced'
+					? 'destructive'
+					: status?.label === 'Sent'
+					  ? undefined
+					  : 'outline';
+
 			if (!status) {
 				return null;
 			}
 
 			return (
-				<div className="flex w-[100px] items-center">
+				<div
+					className={cn(
+						'flex w-[100px] items-center',
+						badgeVariants({ variant }),
+					)}
+				>
 					{status.icon && (
 						<status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
 					)}
 					<span>{status.label}</span>
-				</div>
-			);
-		},
-		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id));
-		},
-	},
-	{
-		accessorKey: 'priority',
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Priority" />
-		),
-		cell: ({ row }) => {
-			const priority = priorities.find(
-				(priority) => priority.value === row.getValue('priority'),
-			);
-
-			if (!priority) {
-				return null;
-			}
-
-			return (
-				<div className="flex items-center">
-					{priority.icon && (
-						<priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-					)}
-					<span>{priority.label}</span>
 				</div>
 			);
 		},

@@ -55,20 +55,15 @@ export default function Navbar({ user }: { user: any }) {
 							<div className="flex items-center">
 								<ModeToggle />
 								<div className="hidden sm:ml-2 sm:flex sm:items-center">
-									<Menu as="div" className="relative ml-3">
-										<div>
-											<UserNav />
-											{/* <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-												<span className="sr-only">Open user menu</span>
-												<Image
-													className="h-8 w-8 rounded-full"
-													src={user?.image || 'https://avatar.vercel.sh/leerob'}
-													height={32}
-													width={32}
-													alt={`${user?.name || 'placeholder'} avatar`}
-												/>
-											</Menu.Button> */}
-										</div>
+									<Menu as="div" className="flex items-center relative ml-3">
+										{/* <div> */}
+										<span className="sr-only">Open user menu</span>
+										<UserNav
+											src={user?.image || 'https://avatar.vercel.sh/leerob'}
+											alt={`${user?.name || 'placeholder'} avatar`}
+											userName={`${user?.name || 'placeholder'}`}
+											email={`${user?.email || 'placeholder'}`}
+										/>
 										<Transition
 											as={Fragment}
 											enter="transition ease-out duration-200"

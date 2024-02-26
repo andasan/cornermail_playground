@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const recipientSchema = z.object({
 	id: z.string(),
 	studentId: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
+	createdAt: z.string(),
+	updatedAt: z.string(),
 	status: z.string(),
 	batch: z.number(),
 	firstName: z.string(),
