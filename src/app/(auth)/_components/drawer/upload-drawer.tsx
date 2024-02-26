@@ -4,18 +4,13 @@ import { Dropzone, FileWithPath, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
 import {
 	IconCloudUpload,
 	IconFileSpreadsheet,
-	IconUpload,
 	IconX,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 
-import { Button } from '@/components/ui/button';
 import {
-	Drawer,
-	DrawerClose,
 	DrawerContent,
 	DrawerDescription,
-	DrawerFooter,
 	DrawerHeader,
 	DrawerTitle,
 } from '@/components/ui/drawer';
@@ -84,11 +79,6 @@ export default function UploadDrawer() {
 					</div>
 				</Dropzone>
 			</div>
-			<DrawerFooter>
-				{/* <DrawerClose>
-					<Button variant="outline">Cancel</Button>
-				</DrawerClose> */}
-			</DrawerFooter>
 		</DrawerContent>
 	);
 }
