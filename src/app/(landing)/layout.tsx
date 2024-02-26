@@ -29,7 +29,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<Suspense>
-						{/* <Header /> */}
+						<Header />
 						{children}
 						<Footer />
 						<Analytics />

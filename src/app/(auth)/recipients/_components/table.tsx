@@ -25,6 +25,7 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 
+import { useRecipientStore } from '@/store/recipientStore';
 import { DataTablePagination } from '../_components/data-table/data-table-pagination';
 import { DataTableToolbar } from '../_components/data-table/data-table-toolbar';
 
@@ -44,9 +45,16 @@ export function DataTable<TData, TValue>({
 		[],
 	);
 	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const { recipients, addAllRecipients } = useRecipientStore();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	React.useEffect(() => {
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		addAllRecipients(data as any);
+	}, [data]);
 
 	const table = useReactTable({
-		data,
+		data: recipients as TData[],
 		columns,
 		state: {
 			sorting,

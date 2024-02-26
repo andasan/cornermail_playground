@@ -26,7 +26,11 @@ export function UserNav({
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="relative h-8 w-8 rounded-full">
 					<Avatar className="h-8 w-8">
-						<AvatarImage src={src} className="h-8 w-8" />
+						<AvatarImage
+							src={src}
+							className="h-8 w-8"
+							referrerPolicy="no-referrer"
+						/>
 						<AvatarFallback>
 							{userName.slice(0, 2).toUpperCase()}
 						</AvatarFallback>
