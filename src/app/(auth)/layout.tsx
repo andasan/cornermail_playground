@@ -1,16 +1,16 @@
-import { Suspense } from "react";
+import '@/app/globals.css';
 
-import "@/app/globals.css";
-
-import Nav from "@/app/(auth)/_components/navigation/nav";
-import Toast from "@/components/cookiesBanner/toast";
-import { Analytics } from "@vercel/analytics/react";
-import Loading from "./loading";
+import Nav from '@/app/(auth)/_components/navigation/nav';
+import Toast from '@/components/cookiesBanner/toast';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import { Analytics } from '@vercel/analytics/react';
+import { Suspense } from 'react';
+import Loading from './dashboard/loading';
 
 export const metadata = {
-	title: "CornerMail",
+	title: 'CornerMail',
 	description:
-		"A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.",
+		'A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.',
 };
 
 export default function RootLayout({
@@ -19,14 +19,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" className="h-full bg-gray-50 dark:bg-gray-950">
-			<body className="h-full">
-				<Suspense fallback={<Loading />}>
+		<html lang="en" suppressHydrationWarning>
+			<body>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
 					<Nav />
-					{children}
+					<Suspense fallback={<Loading />}>{children}</Suspense>
 					{/* <Analytics />
 					<Toast /> */}
-				</Suspense>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

@@ -1,4 +1,4 @@
-import Container from "@/app/(landing)/_components/sectionwrapper/container";
+import Container from '@/app/(landing)/_components/sectionwrapper/container';
 
 export default function Footer() {
 	return (
@@ -59,21 +59,21 @@ export default function Footer() {
 
 							<span className="flex justify-between text-gray-600 dark:text-white">
 								<a href="/" className="font-medium">
-									Terms of Use{" "}
+									Terms of Use{' '}
 								</a>
 								<a href="/" className="font-medium">
-									{" "}
+									{' '}
 									Privacy Policy
 								</a>
 							</span>
 
 							<span className="block text-gray-500 dark:text-gray-400">
-								Need help?{" "}
+								Need help?{' '}
 								<a
 									href="/"
 									className="font-semibold text-gray-600 dark:text-white"
 								>
-									{" "}
+									{' '}
 									Contact Us
 								</a>
 							</span>

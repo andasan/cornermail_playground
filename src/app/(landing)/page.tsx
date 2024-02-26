@@ -5,8 +5,8 @@ import {
 	HeroSection,
 	Stats,
 	Testimonials,
-} from "@/app/(landing)/_components";
-import Header from "@/app/(landing)/_components/layout/header";
+} from '@/app/(landing)/_components';
+import Header from '@/app/(landing)/_components/layout/header';
 
 export default async function IndexPage() {
 	return (

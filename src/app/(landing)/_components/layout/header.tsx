@@ -1,6 +1,6 @@
-import Container from "@/app/(landing)/_components/sectionwrapper/container";
-import Brand from "@/components/logo";
-import AuthButton from "./auth-button";
+import Container from '@/app/(landing)/_components/sectionwrapper/container';
+import Brand from '@/components/logo';
+import AuthButton from './auth-button';
 
 export default function Header() {
 	return (
@@ -81,8 +81,8 @@ function HomeNav() {
 	const navItems = [
 		{
 			id: crypto.randomUUID(),
-			name: "Features",
-			href: "#features",
+			name: 'Features',
+			href: '#features',
 		},
 		// {
 		// 	id: crypto.randomUUID(),

@@ -1,5 +1,5 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
 
 export const {
 	handlers: { GET, POST },
@@ -12,25 +12,25 @@ export const {
 			clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
 			authorization: {
 				params: {
-					prompt: "consent",
-					access_type: "offline",
-					response_type: "code",
+					prompt: 'consent',
+					access_type: 'offline',
+					response_type: 'code',
 				},
 			},
 		}),
 	],
 	callbacks: {
 		async signIn({ account, profile }) {
-			if (account?.provider === "google") {
+			if (account?.provider === 'google') {
 				return (
 					(profile?.email_verified ?? false) &&
-					(profile?.email?.endsWith("@gmail.com") ?? false)
+					(profile?.email?.endsWith('@gmail.com') ?? false)
 				);
 			}
 			return true;
 		},
 	},
 	pages: {
-		signIn: "/sign-in",
+		signIn: '/sign-in',
 	},
 });

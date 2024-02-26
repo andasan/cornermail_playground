@@ -1,6 +1,6 @@
-import cloudinary from "cloudinary";
+import cloudinary from 'cloudinary';
 
-import { config } from "@/utils/config";
+import { config } from '@/utils/config';
 
 cloudinary.v2.config({
 	cloud_name: config.cloudinary.cloud_name,
