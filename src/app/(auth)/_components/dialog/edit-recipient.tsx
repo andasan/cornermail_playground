@@ -57,7 +57,7 @@ export function EditRecipient({ recipient, setOpen }: EditRecipientProps) {
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+		// console.log(values);
 		setOpen(false);
 	}
 
@@ -66,7 +66,7 @@ export function EditRecipient({ recipient, setOpen }: EditRecipientProps) {
 			<DialogHeader>
 				<DialogTitle>Edit profile</DialogTitle>
 				<DialogDescription>
-					Make changes to your profile here. Click save when you're done.
+					Make changes to your profile here. Click save when you&apos;re done.
 				</DialogDescription>
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
