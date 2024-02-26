@@ -2,16 +2,16 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 
-import { Badge, badgeVariants } from '@/components/ui/badge';
+import { badgeVariants } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import { statuses } from '@/app/(auth)/recipients/_data/data';
-import { Task } from '@/app/(auth)/recipients/_data/schema';
+import { Recipient } from '@/app/(auth)/recipients/_data/schema';
 import { cn } from '@/lib/utils';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Recipient>[] = [
 	{
 		id: 'select',
 		header: ({ table }) => (
@@ -37,12 +37,12 @@ export const columns: ColumnDef<Task>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'studentId',
+		accessorKey: 'organizationId',
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Student ID" />
 		),
 		cell: ({ row }) => (
-			<div className="w-[80px]">{row.getValue('studentId')}</div>
+			<div className="w-[80px]">{row.getValue('organizationId')}</div>
 		),
 		enableSorting: false,
 		enableHiding: false,

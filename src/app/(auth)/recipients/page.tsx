@@ -1,27 +1,30 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { sql } from '@vercel/postgres';
 import { Metadata } from 'next';
 import { z } from 'zod';
 
 import { columns } from './_components/data-table/columns';
 import { DataTable } from './_components/table';
-import { recipientSchema } from './_data/schema';
+import { Recipient, recipientSchema } from './_data/schema';
 
 export const metadata: Metadata = {
 	title: 'Recipients',
 	description: 'A recipients and status tracker for transactional emails.',
 };
 
-// Simulate a database read for tasks.
 async function getRecipients() {
-	const data = await fs.readFile(
-		path.join(
-			process.cwd(),
-			'/src/app/(auth)/recipients/_data/recipients.json',
-		),
-	);
-
-	const recipients = JSON.parse(data.toString());
+	const result = await sql`
+		SELECT
+			firstname as "firstName",
+			lastname as "lastName",
+			email,
+			batch,
+			status,
+			organizationid as "organizationId",
+			createdat as "createdAt",
+			updatedat as "updatedAt"
+		FROM recipients
+	`;
+	const recipients = result.rows as Recipient[];
 
 	return z.array(recipientSchema).parse(recipients);
 }

@@ -1,17 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-const formSchema = z.object({
-	firstName: z.string().min(2).max(50),
-	lastName: z.string().min(2).max(50),
-	email: z.string().email(),
-	batch: z.coerce.number(),
-	status: z.string(),
-});
-
 import { Button } from '@/components/ui/button';
 import {
 	DialogContent,
@@ -37,29 +25,12 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 
-type EditRecipientProps = {
-	recipient: z.infer<typeof formSchema>;
-	setOpen: (open: boolean) => void;
-};
+import useEditRecipient, {
+	EditRecipientProps,
+} from './_hooks/useEditRecipient';
 
 export function EditRecipient({ recipient, setOpen }: EditRecipientProps) {
-	const { status, batch, firstName, lastName, email } = recipient;
-
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			firstName,
-			lastName,
-			email,
-			batch,
-			status,
-		},
-	});
-
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// console.log(values);
-		setOpen(false);
-	}
+	const { form, onSubmit } = useEditRecipient({ recipient, setOpen });
 
 	return (
 		<DialogContent className="sm:max-w-[425px]">
