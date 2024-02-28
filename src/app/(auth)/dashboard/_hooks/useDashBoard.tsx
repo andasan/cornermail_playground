@@ -1,35 +1,11 @@
+'use client';
+
 import { DateRangePickerValue } from '@tremor/react';
 import { intervalToDuration } from 'date-fns';
 import { useEffect, useState } from 'react';
 
+import { getAggregatedReportPerDay } from '@/actions/getAggregatedReportPerDay';
 import type { ChartData, GenerateData } from '../_types';
-
-const chartdata = [
-	{
-		name: '21/2',
-		Sent: 890,
-		Opened: 338,
-		Bounced: 538,
-	},
-	{
-		name: '22/2',
-		Sent: 289,
-		Opened: 233,
-		Bounced: 253,
-	},
-	{
-		name: '23/2',
-		Sent: 380,
-		Opened: 535,
-		Bounced: 352,
-	},
-	{
-		name: '24/2',
-		Sent: 90,
-		Opened: 98,
-		Bounced: 28,
-	},
-];
 
 const generateData: GenerateData = (dates, chartdata) => {
 	const [from, to] = dates;
@@ -44,7 +20,7 @@ const generateData: GenerateData = (dates, chartdata) => {
 	return dateArray.map((date) => {
 		const day = date.getDate();
 		const data = chartdata.find(
-			(d) => d.name === `${day}/${date.getMonth() + 1}`,
+			(d) => d.name === `${day}/${`0${date.getMonth() + 1}`.slice(-2)}`,
 		);
 		if (data) return data;
 		return {
@@ -61,6 +37,7 @@ export default function UseDashBoard() {
 		from: new Date(new Date().setDate(new Date().getDate() - 7)),
 		to: new Date(),
 	});
+	const [chartdata, setChartData] = useState<ChartData[]>([]);
 	const [records, setRecords] = useState<ChartData[]>([]);
 	const [aggregate, setAggregate] = useState<Omit<ChartData, 'name'>>({
 		Sent: 0,
@@ -70,7 +47,15 @@ export default function UseDashBoard() {
 
 	useEffect(() => {
 		const dates = [dateRange.from, dateRange.to];
-		setRecords(generateData(dates, chartdata));
+
+		getAggregatedReportPerDay({
+			_startDate: dateRange.from as Date,
+			_endDate: dateRange.to as Date,
+		}).then((data) => {
+			const brevoData = data as ChartData[];
+			setRecords(generateData(dates, brevoData));
+			setChartData(brevoData);
+		});
 	}, [dateRange]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
