@@ -13,7 +13,7 @@ type EmailTemplatesProps = {
 	email: string;
 	firstName: string;
 	lastName: string;
-	folder: string;
+	identifier: string;
 };
 
 export async function editStatusColumn(recipientIds: string[]) {
@@ -41,12 +41,10 @@ export async function editStatusColumn(recipientIds: string[]) {
 
 export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 	const emailPromises = recipients.map(
-		async ({ email, firstName, lastName, folder, organizationId }) => {
+		async ({ email, firstName, lastName, organizationId, identifier }) => {
 			return new Promise((resolve, reject) => {
-				const identifier = `${folder}/${firstName.trim()}_${lastName.trim()}`;
-
 				cloudinary.v2.api
-					.resource(identifier)
+					.resource(`${config.cloudinary.folder_name}/${identifier}`)
 					.then((result) => {
 						renderAsync(EmailTemplate({ studentName: firstName }), {
 							pretty: true,
@@ -119,5 +117,14 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 		},
 	);
 
-	return await Promise.all(emailPromises);
+	const result = await Promise.all(emailPromises);
+	console.log(`
+	====================================
+	Emails sent: ${result.length}
+	====================================
+	${JSON.stringify(result, null, 2)}
+	====================================
+	`);
+
+	return result;
 };

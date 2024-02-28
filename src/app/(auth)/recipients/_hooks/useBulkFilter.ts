@@ -28,8 +28,7 @@ async function sendEmail(mappedSelectedRows?: Recipient[]) {
 				email: row.email,
 				firstName: row.firstName,
 				lastName: row.lastName,
-				// folder: new Date().getFullYear().toString(),
-				folder: config.cloudinary.folder_name,
+				identifier: row.identifier,
 			};
 		});
 		return await sendBulkEmail(recipients);
