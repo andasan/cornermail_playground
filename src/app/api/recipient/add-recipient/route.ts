@@ -22,6 +22,7 @@ export async function POST(request: Request) {
       Batch,
       Status,
       OrganizationId,
+      Identifier,
       CreatedAt,
       UpdatedAt
       ) VALUES (

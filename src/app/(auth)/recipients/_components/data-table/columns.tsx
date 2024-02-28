@@ -14,6 +14,7 @@ import { DataTableRowActions } from './data-table-row-actions';
 export const columns: ColumnDef<Recipient>[] = [
 	{
 		id: 'select',
+		accessorKey: 'select',
 		header: ({ table }) => (
 			<Checkbox
 				checked={
@@ -79,6 +80,17 @@ export const columns: ColumnDef<Recipient>[] = [
 		),
 		cell: ({ row }) => <div className="w-[100px]">{row.getValue('batch')}</div>,
 	},
+	// {
+	// 	accessorKey: "withAttachment",
+	// 	header: ({ column }) => (
+	// 		<DataTableColumnHeader column={column} title="Attachment" />
+	// 	),
+	// 	cell: ({ row }) => (
+	// 		<div className="w-[100px]">
+	// 			{row.getValue("withAttachment") ? "True" : "False"}
+	// 		</div>
+	// 	),
+	// },
 	{
 		accessorKey: 'status',
 		header: ({ column }) => (

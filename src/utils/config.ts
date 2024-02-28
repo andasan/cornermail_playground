@@ -1,6 +1,6 @@
 export const config = {
 	port: process.env.PORT,
-	databaseURL: process.env.DATABASE_URL as string,
+	databaseURL: process.env.POSTGRES_URL as string,
 	clientUrl: process.env.CLIENT_URL || (process.env.VERCEL_URL as string),
 	assetsUrl: process.env.ASSETS_URL as string,
 	email: {

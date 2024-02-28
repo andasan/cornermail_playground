@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DataTableViewOptions } from './data-table-view-options';
 
-import { statuses } from '@/app/(auth)/recipients/_data/data';
+import { selections, statuses } from '@/app/(auth)/recipients/_data/data';
+import { DataTableBulkFilter } from './data-table-bulk-filter';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
 
 interface DataTableToolbarProps<TData> {
@@ -41,6 +42,14 @@ export function DataTableToolbar<TData>({
 						options={statuses}
 					/>
 				)}
+				{
+					<DataTableBulkFilter
+						title="Bulk Email"
+						options={selections}
+						someRowsSelected={table.getIsSomePageRowsSelected()}
+						selectedRows={table.getSelectedRowModel()}
+					/>
+				}
 				{isFiltered && (
 					<Button
 						variant="ghost"

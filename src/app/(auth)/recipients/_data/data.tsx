@@ -4,6 +4,17 @@ import {
 	QuestionMarkCircledIcon,
 } from '@radix-ui/react-icons';
 
+export const selections = [
+	{
+		label: 'Send Selected',
+		value: 'selected',
+	},
+	{
+		label: 'Send All',
+		value: 'all',
+	},
+];
+
 export const statuses = [
 	{
 		value: 'idle',
