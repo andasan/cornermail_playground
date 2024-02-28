@@ -5,6 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 import { editStatusColumn, sendBulkEmail } from '@/actions/sendBulkEmail';
 import { useRecipientStore } from '@/store/recipientStore';
+import { config } from '@/utils/config';
 import { mapSelectedRows } from '@/utils/mapSelectedRows';
 import type { Recipient } from '../_data/schema';
 
@@ -28,7 +29,7 @@ async function sendEmail(mappedSelectedRows?: Recipient[]) {
 				firstName: row.firstName,
 				lastName: row.lastName,
 				// folder: new Date().getFullYear().toString(),
-				folder: 'test_pdf',
+				folder: config.cloudinary.folder_name,
 			};
 		});
 		return await sendBulkEmail(recipients);

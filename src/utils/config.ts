@@ -1,6 +1,7 @@
 export const config = {
 	port: process.env.PORT,
 	databaseURL: process.env.POSTGRES_URL as string,
+	databaseTable: process.env.POSTGRES_TABLE as string,
 	clientUrl: process.env.CLIENT_URL || (process.env.VERCEL_URL as string),
 	assetsUrl: process.env.ASSETS_URL as string,
 	email: {
@@ -15,6 +16,7 @@ export const config = {
 		cloud_name: process.env.CLOUDINARY_NAME as string,
 		api_key: process.env.CLOUDINARY_API_KEY as string,
 		api_secret: process.env.CLOUDINARY_API_SECRET as string,
+		folder_name: process.env.CLOUDINARY_FOLDER_NAME as string,
 	},
 	error: {
 		invalidCloudinaryResource: process.env

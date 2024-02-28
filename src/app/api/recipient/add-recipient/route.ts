@@ -1,3 +1,4 @@
+import { config } from '@/utils/config';
 import { sql } from '@vercel/postgres';
 import { format } from 'date-fns';
 import { NextResponse } from 'next/server';
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
 		if (!firstName || !lastName || !email || !batch || !organizationId)
 			throw new Error('Recipient details required');
 
-		await sql`INSERT INTO Recipients (
+		await sql`INSERT INTO ${config.databaseTable} (
       FirstName,
       LastName,
       Email,
@@ -39,6 +40,6 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error }, { status: 500 });
 	}
 
-	const recipient = await sql`SELECT * FROM Recipients;`;
+	const recipient = await sql`SELECT * FROM ${config.databaseTable};`;
 	return NextResponse.json({ recipient }, { status: 200 });
 }

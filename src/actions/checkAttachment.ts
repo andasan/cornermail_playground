@@ -3,6 +3,7 @@ import { sql } from '@vercel/postgres';
 import { format } from 'date-fns';
 
 import { Recipient } from '@/app/(auth)/recipients/_data/schema';
+import { config } from '@/utils/config';
 import cloudinary from 'cloudinary';
 
 async function editWithAttachmentColumn(recipient: Recipient) {
@@ -12,7 +13,7 @@ async function editWithAttachmentColumn(recipient: Recipient) {
 
 	try {
 		await sql`
-            UPDATE Recipients
+            UPDATE ${config.databaseTable}
             SET
                 UpdatedAt = ${updatedAt},
 								Withattachment = ${withAttachment}

@@ -13,6 +13,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRecipientStore } from '@/store/recipientStore';
+import { config } from '@/utils/config';
 
 export function UserNav({
 	src,
@@ -26,7 +27,10 @@ export function UserNav({
 	const { recipients, editAttachmentById } = useRecipientStore();
 
 	const handleCheck = async () => {
-		const result = await cloudinaryApi(recipients, 'test_pdf');
+		const result = await cloudinaryApi(
+			recipients,
+			config.cloudinary.folder_name,
+		);
 
 		for (const id of result) {
 			editAttachmentById(id, true);

@@ -1,3 +1,4 @@
+import { config } from '@/utils/config';
 import { sql } from '@vercel/postgres';
 import { format } from 'date-fns';
 import { NextResponse } from 'next/server';
@@ -53,7 +54,7 @@ export async function PUT(request: Request) {
 			createdat as "createdAt",
 			updatedat as "updatedAt"
 			withattachment as "withAttachment"
-		FROM recipients WHERE organizationId = ${res.organizationId};`;
+		FROM ${config.databaseTable} WHERE organizationId = ${res.organizationId};`;
 
 	return NextResponse.json(
 		{ recipient: updatedRecipient.rows[0] },
