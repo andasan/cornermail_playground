@@ -1,4 +1,4 @@
-import { sendEmail, testSend } from '@/actions/sendEmail';
+import { sendEmail, testSend } from '@/pandorasbox/sendEmail';
 
 export default function MailTest() {
 	return (

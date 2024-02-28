@@ -16,6 +16,19 @@ type EmailTemplatesProps = {
 	identifier: string;
 };
 
+interface EmailResult {
+	message: string;
+	resource: {
+		organizationId: string;
+		email: string;
+		firstName: string;
+		lastName: string;
+		identifier: string;
+		folder: string;
+	};
+	status: number;
+}
+
 export async function editStatusColumn(recipientIds: string[]) {
 	const client = await pool.connect();
 	try {
@@ -40,7 +53,7 @@ export async function editStatusColumn(recipientIds: string[]) {
 }
 
 export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
-	const emailPromises = recipients.map(
+	const emailPromises: Promise<EmailResult>[] = recipients.map(
 		async ({ email, firstName, lastName, organizationId, identifier }) => {
 			return new Promise((resolve, reject) => {
 				cloudinary.v2.api
@@ -85,7 +98,14 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 									 */
 									resolve({
 										message: `Email sent to ${email}`,
-										resource: { organizationId, email, firstName, lastName },
+										resource: {
+											organizationId,
+											email,
+											firstName,
+											lastName,
+											identifier,
+											folder: config.cloudinary.folder_name_server,
+										},
 										status: 200,
 									});
 								},
@@ -132,13 +152,14 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 	);
 
 	const result = await Promise.all(emailPromises);
-	console.log(`
-	====================================
-	Emails sent: ${result.length}
-	====================================
-	${JSON.stringify(result, null, 2)}
-	====================================
-	`);
+	const failedEmails = result.filter((email) => email.status !== 200);
+	console.log('************************************');
+	console.log(`Emails sent: ${result.length}`);
+	console.log(`Failed emails: ${failedEmails.length}`);
+	console.log('************************************');
+	console.log('=========Start of Report============');
+	console.log(JSON.stringify(failedEmails, null, 2));
+	console.log('==========End of Report=============');
 
 	return result;
 };

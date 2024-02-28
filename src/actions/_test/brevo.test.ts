@@ -1,7 +1,7 @@
 import cloudinary, { ResponseCallback } from 'cloudinary';
 import { expect, test, vi } from 'vitest';
 
-import { sendEmail, testSend } from '@/actions/sendEmail';
+import { sendEmail, testSend } from '@/pandorasbox/sendEmail';
 
 // Mock the cloudinary module
 vi.spyOn(cloudinary.v2.api, 'resource').mockImplementation(
