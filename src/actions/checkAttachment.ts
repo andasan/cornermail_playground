@@ -1,27 +1,37 @@
 'use server';
-import { sql } from '@vercel/postgres';
+import cloudinary from 'cloudinary';
 import { format } from 'date-fns';
 
 import { Recipient } from '@/app/(auth)/recipients/_data/schema';
+import { pool } from '@/lib/pg';
 import { config } from '@/utils/config';
-import cloudinary from 'cloudinary';
 
 async function editWithAttachmentColumn(recipient: Recipient) {
 	const { organizationId, withAttachment } = recipient;
+	const client = await pool.connect();
 
 	const updatedAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
 	try {
-		await sql`
-            UPDATE ${config.databaseTable}
-            SET
-                UpdatedAt = ${updatedAt},
-								Withattachment = ${withAttachment}
-            WHERE
-                organizationId = ${organizationId};
-        `;
+		await client.query('BEGIN');
+		await client.query(
+			`
+			UPDATE ${client.escapeIdentifier(config.databaseTable)}
+			SET
+					UpdatedAt = $1,
+					Withattachment = $2
+			WHERE
+					organizationId = $3;
+		`,
+			[updatedAt, withAttachment, organizationId],
+		);
+
+		await client.query('COMMIT');
 	} catch (error) {
+		await client.query('ROLLBACK');
 		console.log(error);
+	} finally {
+		client.release();
 	}
 }
 
