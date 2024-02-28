@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 				.join(',');
 
 			await client.query(`
-                INSERT INTO Recipients (
+                INSERT INTO ${config.databaseTable} (
                     FirstName,
                     LastName,
                     Email,
@@ -68,7 +68,9 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error }, { status: 500 });
 	}
 
-	const insertedRecipients = await pool.query('SELECT * FROM Recipients');
+	const insertedRecipients = await pool.query(
+		`SELECT * FROM ${config.databaseTable}`,
+	);
 	return NextResponse.json(
 		{ recipients: insertedRecipients.rows },
 		{ status: 200 },

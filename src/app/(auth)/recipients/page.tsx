@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import { Metadata } from 'next';
 import { z } from 'zod';
 
+import { config } from '@/utils/config';
 import { columns } from './_components/data-table/columns';
 import { DataTable } from './_components/table';
 import { Recipient, recipientSchema } from './_data/schema';
@@ -24,7 +25,7 @@ async function getRecipients() {
 			createdat as "createdAt",
 			updatedat as "updatedAt",
 			withAttachment as "withAttachment"
-		FROM recipients
+		FROM ${config.databaseTable}
 	`;
 	const recipients = result.rows as Recipient[];
 

@@ -1,9 +1,10 @@
+import { config } from '@/utils/config';
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
 	try {
-		const result = await sql`CREATE TABLE Recipients (
+		const result = await sql`CREATE TABLE ${config.databaseTable} (
         FirstName varchar(255),
         LastName varchar(255),
         Email varchar(255),

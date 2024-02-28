@@ -19,7 +19,7 @@ type EmailTemplatesProps = {
 export async function editStatusColumn(recipientIds: string[]) {
 	try {
 		await sql.query(
-			`UPDATE Recipients SET UpdatedAt = NOW(), Status = 'sent' WHERE Organizationid = ANY($1)`,
+			`UPDATE ${config.databaseTable} SET UpdatedAt = NOW(), Status = 'sent' WHERE Organizationid = ANY($1)`,
 			[recipientIds],
 		);
 
