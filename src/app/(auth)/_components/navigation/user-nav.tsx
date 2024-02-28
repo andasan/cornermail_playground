@@ -1,4 +1,5 @@
 import cloudinaryApi from '@/actions/checkAttachment';
+import { getBounced } from '@/actions/getBounced';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DrawerTrigger } from '@/components/ui/drawer';
@@ -24,9 +25,10 @@ export function UserNav({
 	userName: string;
 	email: string;
 }) {
-	const { recipients, editAttachmentById } = useRecipientStore();
+	const { recipients, editAttachmentById, editStatusByEmail } =
+		useRecipientStore();
 
-	const handleCheck = async () => {
+	const handleCheckAttachment = async () => {
 		const result = await cloudinaryApi(
 			recipients,
 			config.cloudinary.folder_name_public,
@@ -34,6 +36,14 @@ export function UserNav({
 
 		for (const id of result) {
 			editAttachmentById(id, true);
+		}
+	};
+
+	const handleCheckBounces = async () => {
+		const result = await getBounced();
+
+		for (const recipient of result[0]) {
+			editStatusByEmail(recipient.email, 'bounced');
 		}
 	};
 
@@ -76,8 +86,11 @@ export function UserNav({
 						Settings
 						<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
 					</DropdownMenuItem>
-					<DropdownMenuItem onClick={handleCheck}>
+					<DropdownMenuItem onClick={handleCheckAttachment}>
 						Check for Attachments
+					</DropdownMenuItem>
+					<DropdownMenuItem onClick={handleCheckBounces}>
+						Check for Bounces
 					</DropdownMenuItem>
 					<DrawerTrigger asChild>
 						<DropdownMenuItem>Upload Students</DropdownMenuItem>

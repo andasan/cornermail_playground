@@ -41,28 +41,32 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 							/>
 						</Section>
 					</Section>
-
 					<Section style={paragraphContent}>
 						<Hr style={hr} />
-						<Text style={heading}>Certificate Title</Text>
+						<Text style={heading}>T2202 Tax Form</Text>
 						<Text style={paragraph}>
 							Do Not Reply. This is an automated email using a third-party
 							secure portal.
 						</Text>
 						<Text style={paragraph}>Dear student</Text>
 						<Text style={paragraph}>
-							Please find attached your confidential certificate.
+							Please find attached your confidential tax form.
 						</Text>
 						<Text style={paragraph}>
-							Your certificate contains sensitive personal information. Download
-							it using a trusted, secure connection instead of over free, public
-							wi-fi, such as at airports or coffee shops, etc.
+							Your tax form contains sensitive personal information, including
+							your social insurance number. Download it using a trusted, secure
+							connection instead of over free, public wi-fi, such as at airports
+							or coffee shops, etc.
 						</Text>
 						<Text style={paragraph}>
-							If you need assistance to file your certificate, please contact
-							our preferred partner, Phoenix Accounting Services:{' '}
+							Should you require assistance with your tax filing, we recommend
+							reaching out to our preferred partner, Phoenix Accounting
+							Services. They are currently offering a special, limited-time
+							discount exclusively for Cornerstone students, designed to help
+							you save on tax services. For more details and to take advantage
+							of this offer, please visit:{' '}
 							<a href="https://phoenixcanada.ca/file-your-taxes/">
-								https://phoenixcanada.ca/file-your-taxes/
+								https://phoenixcanada.ca/file-your-taxes
 							</a>
 						</Text>
 					</Section>
@@ -70,7 +74,6 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 					<Section style={paragraphContent}>
 						<Text style={paragraph}>Thank you</Text>
 					</Section>
-
 					<Section style={containerContact}>
 						<Section
 							style={{
@@ -139,7 +142,6 @@ export function EmailTemplate({ studentName }: { studentName: string }) {
 						</Section>
 						<Img width="540" height="48" src={`${baseUrl}/ciccc-footer.png`} />
 					</Section>
-
 					<Section style={{ ...paragraphContent, paddingBottom: 30 }}>
 						<Text
 							style={{
