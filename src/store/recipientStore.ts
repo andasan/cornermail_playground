@@ -8,6 +8,7 @@ type Store = {
 	addRecipient: (recipient: Recipient) => void;
 	editRecipient: (recipient: Recipient) => void;
 	editAttachmentById: (id: string, withAttachment: boolean) => void;
+	editStatusByEmail: (email: string, status: string) => void;
 	editStatusById: (id: string, status: string) => void;
 	getRecipientsInIdle: () => Recipient[];
 };
@@ -29,6 +30,17 @@ export const useRecipientStore = create<Store>()((set, get) => ({
 			recipients: state.recipients.map((r) =>
 				r.organizationId === id ? { ...r, withAttachment } : r,
 			),
+		})),
+	editStatusByEmail: (email: string, status: string) =>
+		set((state) => ({
+			recipients: state.recipients.map((r) => {
+				console.log(r.email, email, r.email === email, status);
+				if (r.email === email) {
+					console.log('match');
+					return { ...r, status };
+				}
+				return r;
+			}),
 		})),
 	editStatusById: (id: string, status: string) =>
 		set((state) => ({
