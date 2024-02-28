@@ -15,12 +15,12 @@ const formSchema = z.object({
 type Recipient = z.infer<typeof formSchema>;
 
 export type EditRecipientProps = {
-	recipient: Recipient & { organizationId: number };
+	recipient: Recipient & { organizationId: string };
 	setOpen: (open: boolean) => void;
 };
 
 async function editRecipientApi(
-	recipient: Recipient & { organizationId: number },
+	recipient: Recipient & { organizationId: string },
 ) {
 	try {
 		const res = await fetch('/api/recipient/edit-recipient', {
