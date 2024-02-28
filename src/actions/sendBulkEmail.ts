@@ -1,11 +1,11 @@
 'use server';
 
 import { renderAsync } from '@react-email/render';
-import { sql } from '@vercel/postgres';
 import cloudinary from 'cloudinary';
 
 import { EmailTemplate } from '@/components/emailTemplate';
 import { apiInstance, sendSmtpEmail } from '@/lib/brevo';
+import { pool } from '@/lib/pg';
 import { config } from '@/utils/config';
 
 type EmailTemplatesProps = {
@@ -17,15 +17,23 @@ type EmailTemplatesProps = {
 };
 
 export async function editStatusColumn(recipientIds: string[]) {
+	const client = await pool.connect();
 	try {
-		await sql.query(
-			`UPDATE ${config.databaseTable} SET UpdatedAt = NOW(), Status = 'sent' WHERE Organizationid = ANY($1)`,
+		await client.query('BEGIN');
+		await client.query(
+			`UPDATE ${client.escapeIdentifier(
+				config.databaseTable,
+			)} SET UpdatedAt = NOW(), Status = 'sent' WHERE Organizationid = ANY($1)`,
 			[recipientIds],
 		);
 
+		await client.query('COMMIT');
 		return true;
 	} catch (error) {
+		await client.query('ROLLBACK');
 		console.log(error);
+	} finally {
+		client.release();
 	}
 
 	return false;

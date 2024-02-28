@@ -1,7 +1,7 @@
-import { sql } from '@vercel/postgres';
 import { Metadata } from 'next';
 import { z } from 'zod';
 
+import { pool } from '@/lib/pg';
 import { config } from '@/utils/config';
 import { columns } from './_components/data-table/columns';
 import { DataTable } from './_components/table';
@@ -13,23 +13,36 @@ export const metadata: Metadata = {
 };
 
 async function getRecipients() {
-	const result = await sql`
-		SELECT
-			firstname as "firstName",
-			lastname as "lastName",
-			email,
-			batch,
-			status,
-			organizationid as "organizationId",
-			identifier,
-			createdat as "createdAt",
-			updatedat as "updatedAt",
-			withAttachment as "withAttachment"
-		FROM ${config.databaseTable}
-	`;
-	const recipients = result.rows as Recipient[];
+	const client = await pool.connect();
 
-	return z.array(recipientSchema).parse(recipients);
+	try {
+		await client.query('BEGIN');
+		const result = await client.query(
+			`
+			SELECT
+				firstname as "firstName",
+				lastname as "lastName",
+				email,
+				batch,
+				status,
+				organizationid as "organizationId",
+				identifier,
+				createdat as "createdAt",
+				updatedat as "updatedAt",
+				withAttachment as "withAttachment"
+			FROM ${client.escapeIdentifier(config.databaseTable)}
+			`,
+		);
+
+		await client.query('COMMIT');
+		const recipients = result.rows as Recipient[];
+		return z.array(recipientSchema).parse(recipients);
+	} catch (error) {
+		await client.query('ROLLBACK');
+		throw error;
+	} finally {
+		client.release();
+	}
 }
 
 export default async function RecipientsPage() {

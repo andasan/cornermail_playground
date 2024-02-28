@@ -2,11 +2,8 @@ import { Recipient } from '@/app/(auth)/recipients/_data/schema';
 import { config } from '@/utils/config';
 import { format } from 'date-fns';
 import { NextResponse } from 'next/server';
-import { Pool } from 'pg';
 
-const pool = new Pool({
-	connectionString: config.databaseURL,
-});
+import { pool } from '@/lib/pg';
 
 export async function POST(request: Request) {
 	const recipients = (await request.json()) as Recipient[];
@@ -14,12 +11,13 @@ export async function POST(request: Request) {
 	const createdAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 	const updatedAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
+	const client = await pool.connect();
+
 	try {
 		if (!recipients || !Array.isArray(recipients) || recipients.length === 0) {
 			throw new Error('Invalid or empty recipient array');
 		}
 
-		const client = await pool.connect();
 		try {
 			await client.query('BEGIN');
 
@@ -42,7 +40,7 @@ export async function POST(request: Request) {
 				.join(',');
 
 			await client.query(`
-                INSERT INTO ${config.databaseTable} (
+                INSERT INTO ${client.escapeIdentifier(config.databaseTable)} (
                     FirstName,
                     LastName,
                     Email,
@@ -69,7 +67,7 @@ export async function POST(request: Request) {
 	}
 
 	const insertedRecipients = await pool.query(
-		`SELECT * FROM ${config.databaseTable}`,
+		`SELECT * FROM ${client.escapeIdentifier(config.databaseTable)}`,
 	);
 	return NextResponse.json(
 		{ recipients: insertedRecipients.rows },
