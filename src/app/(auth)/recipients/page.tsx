@@ -20,8 +20,10 @@ async function getRecipients() {
 			batch,
 			status,
 			organizationid as "organizationId",
+			identifier,
 			createdat as "createdAt",
-			updatedat as "updatedAt"
+			updatedat as "updatedAt",
+			withAttachment as "withAttachment"
 		FROM recipients
 	`;
 	const recipients = result.rows as Recipient[];

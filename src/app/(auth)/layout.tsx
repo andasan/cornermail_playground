@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 
 import { Drawer } from '@/components/ui/drawer';
+import { Toaster } from '@/components/ui/toaster';
 
 import Nav from '@/app/(auth)/_components/navigation/nav';
 import Toast from '@/components/cookiesBanner/toast';
@@ -33,9 +34,8 @@ export default function RootLayout({
 					<Drawer>
 						<Nav />
 						<Suspense fallback={<Loading />}>{children}</Suspense>
-						{/* <Analytics />
-					<Toast /> */}
 						<UploadDrawer />
+						<Toaster />
 					</Drawer>
 				</ThemeProvider>
 			</body>

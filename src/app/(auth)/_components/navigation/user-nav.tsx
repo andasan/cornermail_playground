@@ -1,3 +1,4 @@
+import cloudinaryApi from '@/actions/checkAttachment';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DrawerTrigger } from '@/components/ui/drawer';
@@ -11,6 +12,7 @@ import {
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useRecipientStore } from '@/store/recipientStore';
 
 export function UserNav({
 	src,
@@ -21,6 +23,16 @@ export function UserNav({
 	userName: string;
 	email: string;
 }) {
+	const { recipients, editAttachmentById } = useRecipientStore();
+
+	const handleCheck = async () => {
+		const result = await cloudinaryApi(recipients, 'test_pdf');
+
+		for (const id of result) {
+			editAttachmentById(id, true);
+		}
+	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -59,6 +71,9 @@ export function UserNav({
 					<DropdownMenuItem disabled>
 						Settings
 						<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+					</DropdownMenuItem>
+					<DropdownMenuItem onClick={handleCheck}>
+						Check for Attachments
 					</DropdownMenuItem>
 					<DrawerTrigger asChild>
 						<DropdownMenuItem>Upload Students</DropdownMenuItem>

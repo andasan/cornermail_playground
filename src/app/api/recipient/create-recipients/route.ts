@@ -10,6 +10,7 @@ export async function POST(request: Request) {
         Batch int,
         Status varchar(255),
         OrganizationId varchar(255),
+        Identifier varchar(255),
         CreatedAt timestamp,
         UpdatedAt timestamp
       );`;

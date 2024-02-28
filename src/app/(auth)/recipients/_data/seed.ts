@@ -14,6 +14,7 @@ const recipients = Array.from({ length: 100 }, () => ({
 	firstName: faker.person.firstName(),
 	lastName: faker.person.lastName(),
 	email: faker.internet.email(),
+	withAttachment: faker.datatype.boolean(),
 }));
 
 fs.writeFileSync(

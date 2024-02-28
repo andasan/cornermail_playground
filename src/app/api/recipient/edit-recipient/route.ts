@@ -29,7 +29,9 @@ export async function PUT(request: Request) {
                 Batch = ${batch},
                 Status = ${status},
                 OrganizationId = ${organizationId},
-                UpdatedAt = ${updatedAt}
+								Identifier,
+                UpdatedAt = ${updatedAt},
+								Withattachment = ${res.withAttachment}
             WHERE
                 organizationId = ${res.organizationId};
         `;
@@ -47,8 +49,10 @@ export async function PUT(request: Request) {
 			batch,
 			status,
 			organizationid as "organizationId",
+			identifier,
 			createdat as "createdAt",
 			updatedat as "updatedAt"
+			withattachment as "withAttachment"
 		FROM recipients WHERE organizationId = ${res.organizationId};`;
 
 	return NextResponse.json(
