@@ -29,7 +29,7 @@ export function UserNav({
 	const handleCheck = async () => {
 		const result = await cloudinaryApi(
 			recipients,
-			config.cloudinary.folder_name,
+			config.cloudinary.folder_name_public,
 		);
 
 		for (const id of result) {

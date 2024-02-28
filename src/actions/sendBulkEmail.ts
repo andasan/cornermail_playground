@@ -40,7 +40,6 @@ export async function editStatusColumn(recipientIds: string[]) {
 }
 
 export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
-	console.log('FOLDER: ', config.cloudinary.folder_name_server);
 	const emailPromises = recipients.map(
 		async ({ email, firstName, lastName, organizationId, identifier }) => {
 			return new Promise((resolve, reject) => {
