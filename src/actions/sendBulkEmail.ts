@@ -40,11 +40,12 @@ export async function editStatusColumn(recipientIds: string[]) {
 }
 
 export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
+	console.log('FOLDER: ', config.cloudinary.folder_name_server);
 	const emailPromises = recipients.map(
 		async ({ email, firstName, lastName, organizationId, identifier }) => {
 			return new Promise((resolve, reject) => {
 				cloudinary.v2.api
-					.resource(`${config.cloudinary.folder_name}/${identifier}`)
+					.resource(`${config.cloudinary.folder_name_server}/${identifier}`)
 					.then((result) => {
 						renderAsync(EmailTemplate({ studentName: firstName }), {
 							pretty: true,
@@ -96,7 +97,14 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 									 */
 									resolve({
 										message: error.message || error.response,
-										resource: { organizationId, email, firstName, lastName },
+										resource: {
+											organizationId,
+											email,
+											firstName,
+											lastName,
+											identifier,
+											folder: config.cloudinary.folder_name_server,
+										},
 										status: error.responseCode || 500,
 									});
 								},
@@ -109,7 +117,14 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 						 */
 						resolve({
 							message: config.error.invalidCloudinaryResource || error.message,
-							resource: { organizationId, email, firstName, lastName },
+							resource: {
+								organizationId,
+								email,
+								firstName,
+								lastName,
+								identifier,
+								folder: config.cloudinary.folder_name_server,
+							},
 							status: 404,
 						});
 					});
