@@ -4,9 +4,7 @@ import { Drawer } from '@/components/ui/drawer';
 import { Toaster } from '@/components/ui/toaster';
 
 import Nav from '@/app/(auth)/_components/navigation/nav';
-import Toast from '@/components/cookiesBanner/toast';
 import { ThemeProvider } from '@/components/theme/theme-provider';
-import { Analytics } from '@vercel/analytics/react';
 import { Suspense } from 'react';
 import UploadDrawer from './_components/drawer/upload-drawer';
 import Loading from './dashboard/loading';
@@ -14,7 +12,7 @@ import Loading from './dashboard/loading';
 export const metadata = {
 	title: 'CornerMail',
 	description:
-		'A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, ESLint, and Prettier.',
+		'A web application for transactional emails and recipient management.',
 };
 
 export default function RootLayout({

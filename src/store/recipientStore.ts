@@ -11,6 +11,7 @@ type Store = {
 	editStatusByEmail: (email: string, status: string) => void;
 	editStatusById: (id: string, status: string) => void;
 	getRecipientsInIdle: () => Recipient[];
+	deleteRecipient: (id: string) => void;
 };
 
 export const useRecipientStore = create<Store>()((set, get) => ({
@@ -51,4 +52,8 @@ export const useRecipientStore = create<Store>()((set, get) => ({
 	getRecipientsInIdle: () => {
 		return get().recipients.filter((r) => r.status === 'idle');
 	},
+	deleteRecipient: (id: string) =>
+		set((state) => ({
+			recipients: state.recipients.filter((r) => r.organizationId !== id),
+		})),
 }));

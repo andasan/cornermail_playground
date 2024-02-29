@@ -1,3 +1,5 @@
+import { signOut } from 'next-auth/react';
+
 import cloudinaryApi from '@/actions/checkAttachment';
 import { getBounced } from '@/actions/getBounced';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -13,6 +15,7 @@ import {
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { toast } from '@/components/ui/use-toast';
 import { useRecipientStore } from '@/store/recipientStore';
 import { config } from '@/utils/config';
 
@@ -29,22 +32,38 @@ export function UserNav({
 		useRecipientStore();
 
 	const handleCheckAttachment = async () => {
-		const result = await cloudinaryApi(
-			recipients,
-			config.cloudinary.folder_name_public,
-		);
+		/**
+		 * disabled for demo purposes
+		 */
+		// const result = await cloudinaryApi(
+		// 	recipients,
+		// 	config.cloudinary.folder_name_public,
+		// );
 
-		for (const id of result) {
-			editAttachmentById(id, true);
-		}
+		// for (const id of result) {
+		// 	editAttachmentById(id, true);
+		// }
+
+		toast({
+			title: 'Attachments checked',
+			description: 'Attachments checked successfully',
+			duration: 5000,
+		});
 	};
 
 	const handleCheckBounces = async () => {
-		const result = await getBounced();
-
-		for (const recipient of result[0]) {
-			editStatusByEmail(recipient.email, 'bounced');
-		}
+		/**
+		 * disabled for demo purposes
+		 */
+		// const result = await getBounced();
+		// for (const recipient of result[0]) {
+		// 	editStatusByEmail(recipient.email, "bounced");
+		// }
+		toast({
+			title: 'Bounces checked',
+			description: 'Bounces checked successfully',
+			duration: 5000,
+		});
 	};
 
 	return (
@@ -97,7 +116,7 @@ export function UserNav({
 					</DrawerTrigger>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>
+				<DropdownMenuItem onClick={() => signOut()}>
 					Log out
 					<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 				</DropdownMenuItem>

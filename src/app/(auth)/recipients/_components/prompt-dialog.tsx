@@ -7,13 +7,10 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog';
 import {
 	Form,
@@ -23,12 +20,14 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
+import { useRecipientStore } from '@/store/recipientStore';
+
 const FormSchema = z.object({
-	type: z.enum(['100', '200', '300', '500'], {
-		required_error: 'You need to select a batch amount.',
+	//check if type is a string which is also a valid number
+	type: z.string().refine((val) => Number(parseInt(val)), {
+		message: 'Type must be a number',
 	}),
 });
 
@@ -46,6 +45,7 @@ export function PromptDialog({
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 	});
+	const recipients = useRecipientStore((state) => state.recipients);
 
 	function onSubmit(data: z.infer<typeof FormSchema>) {
 		setOpenPrompt(false);
@@ -76,6 +76,18 @@ export function PromptDialog({
 												defaultValue={field.value}
 												className="flex flex-col space-y-1"
 											>
+												{recipients.length < 100 && (
+													<FormItem className="flex items-center space-x-3 space-y-0">
+														<FormControl>
+															<RadioGroupItem
+																value={String(recipients.length)}
+															/>
+														</FormControl>
+														<FormLabel className="font-normal">
+															{recipients.length} recipients
+														</FormLabel>
+													</FormItem>
+												)}
 												<FormItem className="flex items-center space-x-3 space-y-0">
 													<FormControl>
 														<RadioGroupItem value="100" />

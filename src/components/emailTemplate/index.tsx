@@ -1,230 +1,124 @@
+'use client';
+
+import { Metadata } from 'next';
+import Image from 'next/image';
+import { useState } from 'react';
+
 import {
-	Button,
-	Container,
-	Head,
-	Hr,
-	Html,
-	Img,
-	Link,
-	Preview,
-	Section,
-	Text,
-} from '@react-email/components';
-import * as React from 'react';
+	HoverCard,
+	HoverCardContent,
+	HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import CustomTextArea from '../customTextArea/text-area';
 
-import { config } from '@/utils/config';
+export const metadata: Metadata = {
+	title: 'Email Template',
+	description: 'Preview and modify email message',
+};
 
-export function EmailTemplate({ studentName }: { studentName: string }) {
-	const baseUrl = config.assetsUrl;
+type FormValues = {
+	id: number;
+	header: string;
+	body: string;
+	footer: string;
+};
+
+export default function EmailTemplatePage({
+	template,
+}: { template: FormValues }) {
+	const [templateState, setTemplateState] = useState<FormValues>({
+		id: +template.id,
+		header: template?.header,
+		body: template?.body,
+		footer: template?.footer,
+	});
 
 	return (
-		<Html>
-			<Head />
-			<Preview>Cornerstone International Community College Admin</Preview>
-			<Section style={main}>
-				<Container style={container}>
-					<Section>
-						<Section style={headerBlue}>
-							<Img
-								src={`${baseUrl}/ciccc-header.png`}
-								width="305"
-								height="28"
-								alt="CICCC header blue transparent"
-							/>
-						</Section>
-						<Section style={sectionLogo}>
-							<Img
-								src={`${baseUrl}/ciccc-logo.png`}
-								width="320"
-								height="75"
-								alt="CICCC logo"
-							/>
-						</Section>
-					</Section>
-					<Section style={paragraphContent}>
-						<Hr style={hr} />
-						<Text style={heading}>T2202 Tax Form</Text>
-						<Text style={paragraph}>
-							Do Not Reply. This is an automated email using a third-party
-							secure portal.
-						</Text>
-						<Text style={paragraph}>Dear student</Text>
-						<Text style={paragraph}>
-							Please find attached your confidential tax form.
-						</Text>
-						<Text style={paragraph}>
-							Your tax form contains sensitive personal information, including
-							your social insurance number. Download it using a trusted, secure
-							connection instead of over free, public wi-fi, such as at airports
-							or coffee shops, etc.
-						</Text>
-						<Text style={paragraph}>
-							Should you require assistance with your tax filing, we recommend
-							reaching out to our preferred partner, Phoenix Accounting
-							Services. They are currently offering a special, limited-time
-							discount exclusively for Cornerstone students, designed to help
-							you save on tax services. For more details and to take advantage
-							of this offer, please visit:{' '}
-							<a href="https://phoenixcanada.ca/file-your-taxes/">
-								https://phoenixcanada.ca/file-your-taxes
-							</a>
-						</Text>
-					</Section>
+		<>
+			<div className="hidden h-full flex-col md:flex">
+				<div className="container flex flex-col items-start space-y-2 py-4">
+					<h2 className="text-lg font-semibold">Email Template</h2>
+					<p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
+						Modify email message
+					</p>
+				</div>
+				<Separator />
+				<Tabs defaultValue="complete" className="flex-1">
+					<div className="container h-full py-6">
+						<div className="grid h-full items-stretch gap-6 md:grid-cols-[400px_1fr]">
+							<div className="hidden flex-col space-y-4 sm:flex md:order-2">
+								<div className="grid gap-2">
+									<HoverCard openDelay={200}>
+										<HoverCardTrigger asChild>
+											<span className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+												Preview
+											</span>
+										</HoverCardTrigger>
+										<HoverCardContent className="w-[320px] text-sm" side="left">
+											Modify the email message and see the preview here.
+										</HoverCardContent>
+									</HoverCard>
+								</div>
 
-					<Section style={paragraphContent}>
-						<Text style={paragraph}>Thank you</Text>
-					</Section>
-					<Section style={containerContact}>
-						<Section
-							style={{
-								padding: '20px 20px',
-							}}
-						>
-							<Text style={paragraph}>Connect with us</Text>
-							<table>
-								<tr>
-									<td>
-										<Link href="https://ciccc.ca/">
-											<Img
-												width="22"
-												height="22"
-												src={`${baseUrl}/ciccc-logo-square.png`}
-											/>
-										</Link>
-									</td>
-									<td>
-										<Link href="https://www.facebook.com/cicccvancouver">
-											<Img
-												width="28"
-												height="28"
-												src={`${baseUrl}/icons8-facebook-48.png`}
-											/>
-										</Link>
-									</td>
-									<td>
-										<Link href="https://www.linkedin.com/school/cornerstone-international-community-college-of-canada/?originalSubdomain=ca">
-											<Img
-												width="28"
-												height="28"
-												src={`${baseUrl}/icons8-linkedin-48.png`}
-											/>
-										</Link>
-									</td>
-									<td>
-										<Link href="https://twitter.com/cicccvancouver">
-											<Img
-												width="28"
-												height="28"
-												src={`${baseUrl}/icons8-twitter-squared-48.png`}
-											/>
-										</Link>
-									</td>
-									<td>
-										<Link href="https://www.youtube.com/channel/UCDj9ILg0V9aAF0NxCVDUlww">
-											<Img
-												width="28"
-												height="28"
-												src={`${baseUrl}/icons8-youtube-48.png`}
-											/>
-										</Link>
-									</td>
-									<td>
-										<Link href="https://www.instagram.com/cicccvancouver/?hl=en">
-											<Img
-												width="28"
-												height="28"
-												src={`${baseUrl}/icons8-instagram-48.png`}
-											/>
-										</Link>
-									</td>
-								</tr>
-							</table>
-						</Section>
-						<Img width="540" height="48" src={`${baseUrl}/ciccc-footer.png`} />
-					</Section>
-					<Section style={{ ...paragraphContent, paddingBottom: 30 }}>
-						<Text
-							style={{
-								...paragraph,
-								fontSize: '12px',
-								textAlign: 'center',
-								margin: 0,
-							}}
-						>
-							© 2023 Cornerstone International College of Canada 609 West
-							Hastings St, Vancouver, BC, Canada V6B 4W4
-						</Text>
-					</Section>
-				</Container>
-			</Section>
-		</Html>
+								<Preview templateState={templateState} />
+							</div>
+							<div className="md:order-1">
+								<TabsContent value="complete" className="mt-0 border-0 p-0">
+									<div className="flex h-full flex-col space-y-4">
+										<CustomTextArea
+											className="min-h-[400px] flex-1 p-4 md:min-h-[700px] lg:min-h-[700px]"
+											label={'Message Body'}
+											templateState={templateState}
+											setTemplateState={setTemplateState}
+										/>
+									</div>
+								</TabsContent>
+							</div>
+						</div>
+					</div>
+				</Tabs>
+			</div>
+		</>
 	);
 }
 
-export default EmailTemplate;
+function Preview({ templateState }: { templateState: FormValues }) {
+	return (
+		<div className="flex justify-center h-full bg-white rounded-md p-5 border text-tremor-default">
+			<div className="flex flex-col space-y-4 max-w-lg text-tremor-content">
+				<div className="w-full border border-gray-200 rounded-md">
+					<div className="relative h-28 bg-gradient-to-tr from-blue-900 to-indigo-400 overflow-hidden">
+						<Image
+							src="/images/logo.svg"
+							alt="CornerMail"
+							width={60}
+							height={60}
+							className="absolute -top-1 -left-1"
+						/>
+					</div>
+					<div className="flex flex-col p-9">
+						<h2 className="text-lg font-extrabold mb-4">
+							Unleash Your Potential
+						</h2>
+						<div className="flex flex-col space-y-2">
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+								dangerouslySetInnerHTML={{
+									__html: `${templateState.body}`,
+								}}
+							/>
+						</div>
 
-const fontFamily =
-	'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif';
-
-const main = {
-	backgroundColor: '#dbddde',
-};
-
-const sectionLogo = {
-	padding: '0 40px',
-};
-
-const headerBlue = {
-	width: 0,
-	marginRight: 0,
-};
-
-const container = {
-	margin: '30px auto',
-	width: '610px',
-	backgroundColor: '#fff',
-	borderRadius: 5,
-	overflow: 'hidden',
-	maxWidth: '100%',
-};
-
-const containerContact = {
-	backgroundColor: '#f0fcff',
-	width: '90%',
-	borderRadius: '5px',
-	overflow: 'hidden',
-	marginBottom: 20,
-};
-
-const heading = {
-	fontFamily,
-	fontSize: '14px',
-	lineHeight: '26px',
-	fontWeight: 700,
-	color: '#004dcf',
-};
-
-const paragraphContent = {
-	padding: '0 40px',
-};
-
-const paragraphList = {
-	paddingLeft: 40,
-};
-
-const paragraph = {
-	fontFamily,
-	fontSize: '14px',
-	lineHeight: '22px',
-	color: '#3c4043',
-};
-
-const link = {
-	...paragraph,
-	color: '#004dcf',
-};
-
-const hr = {
-	borderColor: '#e8eaed',
-	margin: '20px 0',
-};
+						<div className="flex text-center flex-col space-y-2 mt-5">
+							<p className="text-tremor-label text-tremor-brand">
+								© 2023 CornerMail
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}

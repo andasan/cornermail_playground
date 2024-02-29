@@ -1,11 +1,4 @@
-import {
-	Blog,
-	CallToAction,
-	Features,
-	HeroSection,
-	Stats,
-	Testimonials,
-} from '@/app/(landing)/_components';
+import { Features, HeroSection } from '@/app/(landing)/_components';
 
 export default async function IndexPage() {
 	return (
@@ -13,10 +6,6 @@ export default async function IndexPage() {
 			<div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
 				<HeroSection />
 				<Features />
-				{/* <Stats /> */}
-				{/* <Testimonials /> */}
-				{/* <CallToAction /> */}
-				{/* <Blog /> */}
 			</div>
 		</main>
 	);

@@ -3,7 +3,8 @@
 import { renderAsync } from '@react-email/render';
 import cloudinary from 'cloudinary';
 
-import { EmailTemplate } from '@/components/emailTemplate';
+import { getData } from '@/app/(auth)/emails/page';
+import EmailTemplate from '@/components/emailTemplate';
 import { apiInstance, sendSmtpEmail } from '@/lib/brevo';
 import { config } from '@/utils/config';
 
@@ -57,6 +58,8 @@ export const testSend: EmailTemplatesProps = async ({
 	lastName,
 	folder,
 }) => {
+	const [template] = await getData();
+
 	return new Promise((resolve, reject) => {
 		try {
 			const identifier = `${folder}/${firstName.trim()}_${lastName.trim()}`;
@@ -73,7 +76,7 @@ export const testSend: EmailTemplatesProps = async ({
 						status: 250,
 					});
 
-					renderAsync(EmailTemplate({ studentName: firstName }), {
+					renderAsync(EmailTemplate({ template }), {
 						pretty: true,
 					}).then((emailHtml) => {
 						const mailOptions = {

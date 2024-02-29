@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import Container from '@/app/(landing)/_components/sectionwrapper/container';
 import Brand from '@/components/logo';
 import { ModeToggle } from '@/components/theme/color-scheme';
@@ -70,8 +72,18 @@ export default function Header() {
 								<ModeToggle />
 							</div>
 
-							<div className="mt-12 lg:mt-0">
+							<div className="relative mt-12 lg:mt-0">
 								<AuthButton />
+								<Image
+									src="/images/arrow.svg"
+									alt="hero"
+									width="200"
+									height="200"
+									className="absolute top-0 right-0 hidden lg:block rotate-[270deg] bg-light-50 -translate-x-1/2 translate-y-10 scale-y-[-1]"
+								/>
+								<span className="absolute w-20 top-28 right-32 font-mono dark:text-dark-900 opacity-30">
+									Dummy Sign In
+								</span>
 							</div>
 						</div>
 					</div>

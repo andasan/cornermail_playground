@@ -3,7 +3,7 @@
 import { renderAsync } from '@react-email/render';
 import cloudinary from 'cloudinary';
 
-import { EmailTemplate } from '@/components/emailTemplate';
+import { EmailTemplate } from '@/components/emailTemplate/mod';
 import { apiInstance, sendSmtpEmail } from '@/lib/brevo';
 import { pool } from '@/lib/pg';
 import { config } from '@/utils/config';
@@ -59,7 +59,7 @@ export const sendBulkEmail = async (recipients: EmailTemplatesProps[]) => {
 				cloudinary.v2.api
 					.resource(`${config.cloudinary.folder_name_server}/${identifier}`)
 					.then((result) => {
-						renderAsync(EmailTemplate({ studentName: firstName }), {
+						renderAsync(EmailTemplate(), {
 							pretty: true,
 						}).then((emailHtml) => {
 							const mailOptions = {

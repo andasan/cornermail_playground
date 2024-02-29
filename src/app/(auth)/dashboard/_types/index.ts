@@ -6,6 +6,6 @@ export type ChartData = {
 };
 
 export type GenerateData = (
-	dates: (Date | undefined)[],
+	dates: [Date | undefined, Date | undefined, string | undefined],
 	chartData: ChartData[],
 ) => ChartData[];

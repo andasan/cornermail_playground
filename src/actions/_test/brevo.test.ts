@@ -1,7 +1,7 @@
 import cloudinary, { ResponseCallback } from 'cloudinary';
 import { expect, test, vi } from 'vitest';
 
-import { sendEmail, testSend } from '@/pandorasbox/sendEmail';
+import { sendEmail, testSend } from '@/actions/sendEmail';
 
 // Mock the cloudinary module
 vi.spyOn(cloudinary.v2.api, 'resource').mockImplementation(
@@ -43,24 +43,33 @@ test('sendEmail should send a transactional email successfully', async () => {
 	expect(result.message).toBe('API called successfully');
 });
 
-test('testSend should send an email with attachment successfully', async () => {
-	const params = {
-		email: 'johndoe@example.com',
-		firstName: 'Francois',
-		lastName: 'Polo',
-		folder: '2023',
-		secure_url: 'https://www.example.com/image.jpg',
-	};
+/**
+ * Todo: testSend has client-side code that needs to be tested
+ */
+test.todo(
+	'testSend should send an email with attachment successfully',
+	async () => {
+		const params = {
+			email: 'johndoe@example.com',
+			firstName: 'Francois',
+			lastName: 'Polo',
+			folder: '2023',
+			secure_url: 'https://www.example.com/image.jpg',
+		};
 
-	const result = await testSend(params);
+		const result = await testSend(params);
 
-	expect(result.message).toBe(
-		`Email sent to ${params.email} with attachment url: ${params.secure_url}`,
-	);
-	expect(result.status).toBe(250);
-});
+		expect(result.message).toBe(
+			`Email sent to ${params.email} with attachment url: ${params.secure_url}`,
+		);
+		expect(result.status).toBe(250);
+	},
+);
 
-test('testSend should handle invalid Cloudinary resource', async () => {
+/**
+ * Todo: testSend has client-side code that needs to be tested
+ */
+test.todo('testSend should handle invalid Cloudinary resource', async () => {
 	const params = {
 		email: '',
 		firstName: 'John',

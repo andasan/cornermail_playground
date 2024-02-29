@@ -52,10 +52,7 @@ export async function getBounced() {
 					.filter((email) => email);
 				const uniqueEmails = Array.from(new Set(bouncedData));
 
-				const validated = await validateData(uniqueEmails);
-				// console.log(validated);
-
-				return validated;
+				return await validateData(uniqueEmails);
 			},
 			(error) => {
 				console.error(error);

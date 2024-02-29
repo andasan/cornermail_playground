@@ -5,7 +5,6 @@ import { useToast } from '@/components/ui/use-toast';
 
 import { editStatusColumn, sendBulkEmail } from '@/actions/sendBulkEmail';
 import { useRecipientStore } from '@/store/recipientStore';
-import { config } from '@/utils/config';
 import { mapSelectedRows } from '@/utils/mapSelectedRows';
 import type { Recipient } from '../_data/schema';
 
@@ -31,7 +30,28 @@ async function sendEmail(mappedSelectedRows?: Recipient[]) {
 				identifier: row.identifier,
 			};
 		});
-		return await sendBulkEmail(recipients);
+		/**
+		 * disabled for demo purposes
+		 * return dummy data
+		 */
+		// return await sendBulkEmail(recipients);
+
+		return await Promise.resolve(
+			Array.from(
+				{ length: recipients.length },
+				() =>
+					({
+						message: 'Email sent successfully',
+						resource: {
+							organizationId: '123',
+							email: 'hoge@hoge.com',
+							firstName: 'Hoge',
+							lastName: 'Fuga',
+						},
+						status: 200,
+					}) as BulkEmailResponse,
+			),
+		);
 	}
 }
 
@@ -45,10 +65,6 @@ type BulkEmailResponse = {
 	};
 	status: number;
 };
-
-type Prettify<T> = {
-	[K in keyof T]: T[K];
-} & {};
 
 async function editStatusColumnAPI(recipients: string[]) {
 	try {
@@ -129,6 +145,9 @@ export function useBulkFilter<TData>(selectedRows: RowModel<TData>) {
 		}
 	}, [batchAmount]);
 
+	/**
+	 * Handle the submit event for selected emails only
+	 */
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const handleSubmit = React.useCallback(() => {
 		if (!selectedOption) {
@@ -137,17 +156,46 @@ export function useBulkFilter<TData>(selectedRows: RowModel<TData>) {
 
 		if (selectedOption === 'selected') {
 			const mappedSelectedRows = mapSelectedRows(selectedRows) as Recipient[];
+
+			toast({
+				title: 'Email sending',
+				description: `Sending ${mappedSelectedRows.length} emails in progress.`,
+				variant: 'info',
+			});
+
 			sendEmail(mappedSelectedRows).then((response) => {
-				console.log(response);
-				// if (response?.status === 200) {
-				// 	toast({
-				// 		title: "Email sent",
-				// 		description: response.message,
-				// 	});
-				// 	for (const id of response.resource || []) {
-				// 		editStatusById(id, "sent");
-				// 	}
-				// }
+				const responseBatch = response as BulkEmailResponse[];
+				const successfulBatch = responseBatch?.filter(
+					(res) => res.status === 200,
+				);
+
+				const organizationIds = successfulBatch?.map(
+					(res) => res.resource.organizationId,
+				);
+
+				/**
+				 * Update the status of the recipients in the database
+				 */
+				editStatusColumnAPI(organizationIds).then((result) => {
+					if (result) {
+						/**
+						 * Update the status of the recipients in the store
+						 */
+						for (const ele of successfulBatch) {
+							editStatusById(ele.resource.organizationId, 'sent');
+						}
+
+						toast({
+							title: 'Email sent',
+							description: `Successfully sent ${successfulBatch?.length} emails.`,
+						});
+					} else {
+						toast({
+							title: 'Email sent failed',
+							description: 'Failed to update the status of the recipients.',
+						});
+					}
+				});
 			});
 		}
 

@@ -1,6 +1,9 @@
 import type { GetAggregatedReport } from '@getbrevo/brevo';
 
-import { getAggregatedReport } from '@/actions/getAggregatedReport';
+/**
+ * Disabled for demo purposes
+ */
+// import { getAggregatedReport } from '@/actions/getAggregatedReport';
 import { Card, TabGroup } from '@tremor/react';
 
 function getUsage(aggregate: GetAggregatedReport) {
@@ -57,12 +60,30 @@ function Usage({ resource, usage }: { resource: string; usage: string }) {
 }
 
 export default async function Statistics() {
-	const aggregate = await getAggregatedReport({
-		_startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
-		_endDate: new Date(),
-	});
+	/**
+	 * Disabled for demo purposes
+	 */
+	// const aggregate = await getAggregatedReport({
+	// 	_startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
+	// 	_endDate: new Date(),
+	// });
 
-	if (!aggregate.data) {
+	const fakeRequests = Math.floor(Math.random() * 100);
+	const fakeOpens = Math.floor(Math.random() * fakeRequests);
+	const fakeBounce = fakeRequests - fakeOpens;
+
+	const fakeAggregate = {
+		data: {
+			body: {
+				requests: fakeRequests,
+				delivered: Math.floor(Math.random() * fakeRequests),
+				opens: fakeOpens,
+				hardBounces: fakeBounce,
+			},
+		},
+	};
+
+	if (!fakeAggregate.data) {
 		return (
 			<div className="text-tremor-label text-tremor-brand-muted text-center italic bg-tremor-background-emphasis bg-opacity-30 rounded-lg my-3 py-5">
 				Error Loading Statistics
@@ -70,7 +91,7 @@ export default async function Statistics() {
 		);
 	}
 
-	const usage = getUsage(aggregate.data.body);
+	const usage = getUsage(fakeAggregate.data.body);
 
 	return (
 		<TabGroup>
