@@ -3,10 +3,10 @@
 import { renderAsync } from '@react-email/render';
 import cloudinary from 'cloudinary';
 
-import { getData } from '@/app/(auth)/emails/page';
 import EmailTemplate from '@/components/emailTemplate';
 import { apiInstance, sendSmtpEmail } from '@/lib/brevo';
 import { config } from '@/utils/config';
+import { getData } from './getDummyEmailContent';
 
 /**
  * Brevo Transactional API instance
