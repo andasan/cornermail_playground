@@ -8,6 +8,8 @@ import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
+import { Separator } from '@/components/ui/separator';
+
 import { cn } from '@/lib/utils';
 import { Box, Button, Divider, Group, Modal, TextInput } from '@mantine/core';
 import {
@@ -292,7 +294,7 @@ export default function CustomTextArea({
 				)}
 			>
 				<MenuBar editor={editor} setToggleHtml={setToggleHtml} />
-				<Divider mt={5} mb={20} />
+				<Separator className="my-3" />
 				{editor && toggleHtml ? (
 					<Box>{editor.getHTML()}</Box>
 				) : (

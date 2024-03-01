@@ -1,62 +1,53 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-  <img alt="Shows all of the tools in the stack for this template, also listed in the README file." src="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-</picture>
+# CornerMail
 
-<div align="center"><strong>Next.js 14 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
-<br />
-<div align="center">
-<a href="http://admin-dash-template.vercel.sh/">Demo</a>
-<span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs">Clone & Deploy</a>
-<span>
-</div>
+Welcome to the revamped ~~Dottax~~ CornerMail web application! CornerMail is a powerful tool designed to simplify and streamline email blasting, now built on the latest Next.js 14 framework with TypeScript. It introduces several new features and technologies to enhance your email campaign experience.
 
-## Overview
+## Features
 
-This is a starter template using the following stack:
+- **Email Blasting**: Send emails to multiple recipients at once.
+- **Email Templates**: Create and save email templates for future use.
+- **Recipient Management**: Manage your email recipients with ease. Upload recipients from a CSV/XLSX file.
+- **Email Tracking**: Monitor the status of your sent emails.
+- **Email Analytics**: View detailed analytics for your email campaigns.
+- **Email Automation**: Automate your email campaigns with ease.
+- ~~**Email Scheduling**: Schedule emails to be sent at a later time.~~ (Coming soon)
 
-- Framework - [Next.js 14](https://nextjs.org/14)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [NextAuth.js](https://next-auth.js.org)
-- Database - [Vercel Postgres](https://vercel.com/postgres)
-- Deployment - [Vercel](https://vercel.com/docs/concepts/next.js/overview)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Tremor](https://www.tremor.so)
-- Analytics - [Vercel Analytics](https://vercel.com/analytics)
-- Linting - [ESLint](https://eslint.org)
-- Formatting - [Prettier](https://prettier.io)
+## Screenshot
 
-This template uses the new Next.js App Router. This includes support for enhanced layouts, colocation of components, tests, and styles, component-level data fetching, and more.
+![CornerMail](public/images/screenshot.jpeg)
 
-## Getting Started
+## Stack
 
-During the deployment, Vercel will prompt you to create a new Postgres database. This will add the necessary environment variables to your project.
+- **Framework**: [Next.js 14](https://nextjs.org/14)
 
-Inside the Vercel Postgres dashboard, create a table based on the schema defined in this repository.
+- **Language**: [TypeScript](https://www.typescriptlang.org)
 
-```
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  name VARCHAR(255),
-  username VARCHAR(255)
-);
-```
+- **Authentication**: [NextAuth.js](https://next-auth.js.org)
 
-Insert a row for testing:
+- **Database**: [Vercel Postgres](https://vercel.com/postgres)
 
-```
-INSERT INTO users (id, email, name, username) VALUES (1, 'me@site.com', 'Me', 'username');
-```
+- **Deployment**: [Vercel](https://vercel.com/docs/concepts/next.js/overview)
 
-Finally, run the following commands to start the development server:
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
 
-```
-pnpm install
-pnpm dev
-```
+- **Tables**: [TanStack Table](https://tanstack.com/table/latest)
 
-You should now be able to access the application at http://localhost:3000.
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+
+- **Components**: [Tremor](https://www.tremor.so), [Shadcn/ui](https://ui.shadcn.com/)
+
+- **Linting/Formatting**: [Biome](https://biomejs.dev/)
+
+- **Testing**: [Vitest](https://vitest.dev/)
+- **Monitoring**: [Vercel](https://vercel.com/docs/monitoring)
+
+## License
+
+CornerMail is open-source and licensed under the [MIT License](LICENSE).
+
+
+## End notes
+
+I hope you find the upgraded CornerMail a valuable tool for simplifying your email campaigns and delivering an exceptional user experience.
+
+Happy Email Blasting!
