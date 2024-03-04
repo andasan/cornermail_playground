@@ -8,9 +8,12 @@
 		"lint": "next lint",
 		"test": "vitest run",
 		"test:watch": "vitest --watch",
+		"playwright:chrome": "playwright test --project chromium --headed",
+		"playwright": "playwright test",
 		"prepare": "husky",
 		"pre-commit": "lint-staged",
 		"format": "biome check --apply ./src",
+		"format:test": "biome check --apply ./__tests__",
 		"seed": "tsx ./src/app/\\(auth\\)/recipients/_data/seed.ts"
 	},
 	"dependencies": {
@@ -95,8 +98,10 @@
 		"trailingComma": "none"
 	},
 	"devDependencies": {
+		"@applitools/eyes-playwright": "^1.25.0",
 		"@biomejs/biome": "1.5.3",
 		"@faker-js/faker": "^8.4.1",
+		"@playwright/test": "^1.42.1",
 		"@tailwindcss/forms": "^0.5.7",
 		"@testing-library/react": "^14.2.1",
 		"@vitejs/plugin-react": "^4.2.1",

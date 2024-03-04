@@ -1,6 +1,11 @@
 import { getData } from '@/actions/getDummyEmailContent';
 import EmailTemplatePage from '@/components/emailTemplate';
 
+export const metadata = {
+	title: 'Email Template',
+	description: 'Preview of the email template for the CornerMail application.',
+};
+
 export default async function EmailTemplate() {
 	const [template] = await getData();
 

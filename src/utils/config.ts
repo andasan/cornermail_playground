@@ -20,6 +20,7 @@ export const config = {
 			.NEXT_PUBLIC_CLOUDINARY_FOLDER_NAME as string,
 		folder_name_server: process.env.CLOUDINARY_FOLDER_NAME as string,
 	},
+	applitools: process.env.APPLITOOLS_API_KEY as string,
 	error: {
 		invalidCloudinaryResource: process.env
 			.INVALID_CLOUDINARY_RESOURCE as string,

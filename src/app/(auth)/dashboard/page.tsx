@@ -5,10 +5,16 @@ import ChartComponent from './_components/chart-component';
 import Statistics from './_components/statistics';
 import { LoadingStatistics } from './loading';
 
+export const metadata = {
+	title: 'Dashboard',
+	description:
+		'Overview of the analytics and statistics for the CornerMail application.',
+};
+
 export default async function DashboardPage() {
 	return (
 		<main className="p-4 md:p-10 mx-auto max-w-7xl">
-			<Title>Analytics Overview</Title>
+			<Title data-testid="dashboard-title">Analytics Overview</Title>
 			<Suspense fallback={<LoadingStatistics />}>
 				<Statistics />
 			</Suspense>
