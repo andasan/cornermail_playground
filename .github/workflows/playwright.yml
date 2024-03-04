@@ -1,11 +1,12 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 env:
   APPLITOOLS_API_KEY: '${{ secrets.APPLITOOLS_API_KEY }}'
+  NEXTAUTH_SECRET: '${{ secrets.NEXTAUTH_SECRET }}'
 jobs:
   test:
     timeout-minutes: 60
@@ -25,5 +26,5 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: playwright-report/
+        path: __tests__/
         retention-days: 30
